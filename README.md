@@ -1,1 +1,0 @@
-# soukimannga-ho-mupe-zi
