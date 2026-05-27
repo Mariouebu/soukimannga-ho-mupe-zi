@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Website & Admin System</title>
+    <!-- Tailwind CSS (Aesthetics and Responsiveness) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        /* Smooth Custom Transitions */
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- ヘッダー・ナビゲーション -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 font-bold text-xl text-indigo-600 hover:opacity-80 transition-opacity">
+                <i class="fa-solid fa-shop"></i>
+                <span>MY OFFICIAL SHOP</span>
+            </a>
+            
+            <div class="flex items-center gap-3">
+                <!-- 閲覧 / 管理状態のステータスバッジ -->
+                <span id="mode-badge" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    デモモード動作中
+                </span>
+                
+                <button id="nav-login-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 hover:bg-indigo-600 hover:text-white transition-all duration-300 shadow-sm">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>管理者ログイン</span>
+                </button>
+                <button id="nav-logout-btn" class="hidden flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-all duration-300 shadow-sm">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>ログアウト</span>
+                </button>
+                <button id="nav-admin-btn" class="hidden flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 shadow-sm">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>管理画面へ</span>
+                </button>
+                <button id="nav-view-btn" class="hidden flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all duration-300 shadow-sm">
+                    <i class="fa-solid fa-eye"></i>
+                    <span>サイトを見る</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインヒーローセクション -->
+    <section id="hero-section" class="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-violet-700 text-white py-16 px-4">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent)] pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+            <span class="inline-block px-4 py-1 rounded-full bg-white/20 text-white text-xs font-semibold tracking-wider uppercase backdrop-blur-sm">Official Website</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">お知らせ・オリジナルグッズ販売</h1>
+            <p class="text-indigo-100 text-base md:text-lg max-w-xl mx-auto font-light">
+                最新の活動情報をお届けするお知らせコーナーと、ここでしか買えない限定オリジナルグッズの紹介・販売ページです。
+            </p>
+            <div class="flex justify-center gap-4 pt-2">
+                <a href="#news-section" class="px-5 py-2.5 rounded-lg bg-white text-indigo-700 font-semibold text-sm hover:bg-indigo-50 transition-all duration-300 shadow-lg">お知らせを見る</a>
+                <a href="#goods-section" class="px-5 py-2.5 rounded-lg bg-indigo-500/30 text-white border border-indigo-400/30 font-semibold text-sm hover:bg-indigo-500/50 transition-all duration-300 backdrop-blur-sm">グッズをチェック</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+        
+        <!-- ==================== 閲覧画面 (USER VIEW) ==================== -->
+        <div id="user-view" class="space-y-12 fade-in">
+            <!-- お知らせセクション -->
+            <section id="news-section" class="scroll-mt-20">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-bullhorn text-indigo-600"></i>
+                        <span>📢 最新お知らせ</span>
+                    </h2>
+                </div>
+                <div id="news-list-container" class="space-y-4">
+                    <!-- JavaScriptによって動的に挿入されます -->
+                </div>
+            </section>
+
+            <!-- グッズ販売紹介セクション -->
+            <section id="goods-section" class="scroll-mt-20">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-indigo-600"></i>
+                        <span>🛍 グッズ紹介 & 販売</span>
+                    </h2>
+                </div>
+                <div id="goods-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- JavaScriptによって動的に挿入されます -->
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== 管理画面 (ADMIN VIEW - 初期状態は非表示) ==================== -->
+        <div id="admin-view" class="hidden space-y-8 fade-in">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-indigo-50 border border-indigo-100 p-6 rounded-2xl">
+                <div>
+                    <h2 class="text-2xl font-bold text-indigo-950 flex items-center gap-2">
+                        <i class="fa-solid fa-gears text-indigo-600"></i>
+                        <span>🛠 管理者ダッシュボード</span>
+                    </h2>
+                    <p class="text-sm text-indigo-800/80 mt-1">ここでお知らせの追加やグッズの登録・編集、データベース連携設定を行えます。</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="toggleSection('db-config-card')" class="px-3.5 py-1.5 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all duration-300">
+                        <i class="fa-solid fa-database"></i> Firebase接続設定
+                    </button>
+                </div>
+            </div>
+
+            <!-- Firebase 接続設定カード (トグル式) -->
+            <div id="db-config-card" class="hidden bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 fade-in">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 class="font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud-bolt text-indigo-600"></i>
+                        <span>Firebase 本番環境連携設定 (GitHubアップロード用)</span>
+                    </h3>
+                    <button onclick="toggleSection('db-config-card')" class="text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    ここにあなたのFirebaseプロジェクトのウェブアプリ設定（config）を入力して保存すると、デモモード（ローカル保存）から本物のデータベース（Firestore / Auth）へ切り替わります。GitHubへアップロードする際、誰がアクセスしても同じデータが表示されるようになります。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">API Key</label>
+                        <input type="text" id="fb-apiKey" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="AIzaSy...">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Auth Domain</label>
+                        <input type="text" id="fb-authDomain" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="your-app.firebaseapp.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Project ID</label>
+                        <input type="text" id="fb-projectId" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="your-app-id">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">App ID</label>
+                        <input type="text" id="fb-appId" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="1:12345:web:abcd">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                    <button id="btn-save-db" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-semibold hover:bg-indigo-700 transition-all duration-300">
+                        設定を保存して再接続する
+                    </button>
+                    <button id="btn-clear-db" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-xs font-semibold hover:bg-slate-200 transition-all duration-300">
+                        設定をクリア (デモへ戻す)
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- お知らせ投稿パネル -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
+                        <span>📢 お知らせの投稿</span>
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">投稿日</label>
+                            <input type="date" id="admin-news-date" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">バッジ (例: 重要, SHOP, 活動など)</label>
+                            <input type="text" id="admin-news-tag" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="重要">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">本文</label>
+                            <textarea id="admin-news-content" rows="4" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="お知らせの詳細テキストを入力してください。"></textarea>
+                        </div>
+                        <button id="btn-add-news" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-all duration-300 shadow-md">
+                            投稿する
+                        </button>
+                    </div>
+                </div>
+
+                <!-- グッズ追加パネル -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-cart-plus text-indigo-600"></i>
+                        <span>🛍 グッズの新規登録</span>
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">グッズ名</label>
+                            <input type="text" id="admin-goods-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="限定Tシャツ（黒）">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">価格 (円)</label>
+                                <input type="number" id="admin-goods-price" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="3000">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">アイコン (絵文字)</label>
+                                <select id="admin-goods-emoji" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500 bg-white">
+                                    <option value="👕">👕 Tシャツ</option>
+                                    <option value="🧢">🧢 帽子・キャップ</option>
+                                    <option value="🔑">🔑 キーホルダー</option>
+                                    <option value="🎨">🎨 ステッカー/アート</option>
+                                    <option value="🎒">🎒 バッグ/リュック</option>
+                                    <option value="☕">☕ マグカップ</option>
+                                    <option value="💿">💿 CD/レコード</option>
+                                    <option value="🎁">🎁 その他ギフト</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">グッズの説明</label>
+                            <textarea id="admin-goods-desc" rows="3" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="サイズ展開や素材など、簡単な説明文を入力。"></textarea>
+                        </div>
+                        <button id="btn-add-goods" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-all duration-300 shadow-md">
+                            商品を登録する
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 投稿済データ一覧管理（編集・削除用） -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-indigo-600"></i>
+                        <span>📋 現在の登録情報 (削除・整理)</span>
+                    </h3>
+                    <div class="space-y-6 overflow-y-auto max-h-[380px] pr-2">
+                        <!-- 登録中のリスト (JSで動的に表示) -->
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 tracking-wider uppercase mb-2">📢 投稿済みお知らせ</h4>
+                            <div id="admin-news-list" class="space-y-2">
+                                <!-- JS -->
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 tracking-wider uppercase mb-2">🛍 登録済みグッズ</h4>
+                            <div id="admin-goods-list" class="space-y-2">
+                                <!-- JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 border-t border-slate-800 text-xs mt-12">
+        <p class="mb-2">© 2026 MY OFFICIAL SITE. All Rights Reserved.</p>
+        <p class="text-slate-600">Created with HTML, Tailwind CSS & Firebase Compatibility</p>
+    </footer>
+
+    <!-- 管理者ログイン用モーダル（ポップアップ） -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 fade-in">
+        <div class="bg-white rounded-2xl border border-slate-200 max-w-sm w-full p-6 relative shadow-2xl space-y-5">
+            <!-- 閉じるボタン -->
+            <button id="btn-close-login" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-900">管理者サインイン</h3>
+                <p class="text-xs text-slate-500">お知らせやグッズの投稿を行うためのダッシュボードにログインします。</p>
+            </div>
+
+            <!-- デモ用ログイン情報案内 -->
+            <div id="demo-login-info" class="bg-indigo-50 border border-indigo-100 p-3 rounded-lg text-xs space-y-1">
+                <p class="font-bold text-indigo-950"><i class="fa-solid fa-circle-info"></i> デモ用ログイン情報 (すぐ使えます)</p>
+                <p class="text-indigo-800 font-mono select-all">メール: <strong>admin@example.com</strong></p>
+                <p class="text-indigo-800 font-mono select-all">パスワード: <strong>password123</strong></p>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス</label>
+                    <input type="email" id="login-email" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="admin@example.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">パスワード</label>
+                    <input type="password" id="login-password" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500" placeholder="••••••••">
+                </div>
+                <button id="btn-submit-login" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-all duration-300 shadow-md">
+                    ログインする
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知トーストシステム (Alertの代わり) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- ==================== JS ロジック ==================== -->
+    <script type="module">
+        // 初期デモデータ (LocalStorage等に保存するベース用)
+        const DEFAULT_NEWS = [
+            { id: "news-1", date: "2026-05-20", tag: "NEW", content: "オフィシャルファンクラブがついに開設！限定コンテンツを続々公開予定です。" },
+            { id: "news-2", date: "2026-05-15", tag: "重要", content: "システムメンテナンスのおしらせ。5月28日 午前2時〜午前5時はアクセスできません。" },
+            { id: "news-3", date: "2026-05-01", tag: "グッズ", content: "春夏シーズン向けの限定ロングスリーブTシャツの予約販売が開始しました！" }
+        ];
+
+        const DEFAULT_GOODS = [
+            { id: "goods-1", name: "Official Graphic Hoodie", price: 6800, emoji: "👕", desc: "裏起毛仕様で肌触りの良いヘビーオンスオリジナルパーカー。限定グラフィックプリント付き。" },
+            { id: "goods-2", name: "Vintage Style Logo Cap", price: 3500, emoji: "🧢", desc: "アジャスター付きのクラシックなウォッシュド加工ロゴキャップ。どんなコーディネートにも合わせやすいです。" },
+            { id: "goods-3", name: "Acrylic Character Keychain", price: 1200, emoji: "🔑", desc: "両面カラープリントの高透明度アクリル製キーホルダー。カバンや鍵につけてお出かけしましょう。" }
+        ];
+
+        // ログイン状態およびFirebase接続状態の管理
+        let isLoggedIn = false;
+        let isFirebaseMode = false;
+        let db = null;
+        let auth = null;
+
+        // Firebase SDK 動的インポート用
+        let firebaseApp = null;
+
+        // アプリケーションデータ
+        let appData = {
+            news: [],
+            goods: []
+        };
+
+        // カスタムトースト表示関数 (alertを使わないルールのため)
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl border text-sm shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 fade-in ${
+                type === "error" 
+                    ? "bg-rose-50 border-rose-100 text-rose-800" 
+                    : "bg-emerald-50 border-emerald-100 text-emerald-800"
+            }`;
+            
+            const icon = type === "error" ? "fa-circle-xmark" : "fa-circle-check";
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} text-lg"></i>
+                <span class="font-medium">${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            // アニメーション表示用
+            setTimeout(() => {
+                toast.classList.remove("opacity-0", "translate-y-2");
+            }, 10);
+
+            // 4秒後に削除
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // セクショントグルヘルパー
+        window.toggleSection = function(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle("hidden");
+        };
+
+        // ローカルストレージデータの読み出しと保存
+        function initLocalData() {
+            const storedNews = localStorage.getItem("local_news");
+            const storedGoods = localStorage.getItem("local_goods");
+
+            if (!storedNews) {
+                localStorage.setItem("local_news", JSON.stringify(DEFAULT_NEWS));
+                appData.news = [...DEFAULT_NEWS];
+            } else {
+                appData.news = JSON.parse(storedNews);
+            }
+
+            if (!storedGoods) {
+                localStorage.setItem("local_goods", JSON.stringify(DEFAULT_GOODS));
+                appData.goods = [...DEFAULT_GOODS];
+            } else {
+                appData.goods = JSON.parse(storedGoods);
+            }
+        }
+
+        function saveLocalData() {
+            localStorage.setItem("local_news", JSON.stringify(appData.news));
+            localStorage.setItem("local_goods", JSON.stringify(appData.goods));
+        }
+
+        // UI描画処理：ユーザー画面 ＆ 管理画面
+        function renderUI() {
+            const newsListContainer = document.getElementById("news-list-container");
+            const goodsGrid = document.getElementById("goods-grid");
+            const adminNewsList = document.getElementById("admin-news-list");
+            const adminGoodsList = document.getElementById("admin-goods-list");
+
+            // --- ユーザー閲覧画面：お知らせ描画 ---
+            newsListContainer.innerHTML = "";
+            if (appData.news.length === 0) {
+                newsListContainer.innerHTML = `
+                    <div class="text-center py-12 text-slate-400 bg-white border border-slate-100 rounded-2xl">
+                        <i class="fa-regular fa-comment-dots text-3xl mb-2"></i>
+                        <p class="text-sm">おしらせは現在ありません。</p>
+                    </div>
+                `;
+            } else {
+                // 日付が新しい順にソートして表示
+                const sortedNews = [...appData.news].sort((a, b) => new Date(b.date) - new Date(a.date));
+                sortedNews.forEach(item => {
+                    newsListContainer.innerHTML += `
+                        <div class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="flex items-center gap-3 shrink-0">
+                                <span class="text-xs font-bold text-slate-400 tracking-wider">${item.date}</span>
+                                ${item.tag ? `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-indigo-50 text-indigo-600 border border-indigo-100 uppercase">${item.tag}</span>` : ''}
+                            </div>
+                            <div class="text-slate-700 text-sm leading-relaxed">${item.content}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            // --- ユーザー閲覧画面：グッズ描画 ---
+            goodsGrid.innerHTML = "";
+            if (appData.goods.length === 0) {
+                goodsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-16 text-slate-400 bg-white border border-slate-100 rounded-2xl">
+                        <i class="fa-regular fa-folder-open text-3xl mb-2"></i>
+                        <p class="text-sm">現在登録されているグッズはありません。</p>
+                    </div>
+                `;
+            } else {
+                appData.goods.forEach(item => {
+                    goodsGrid.innerHTML += `
+                        <div class="bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col group border-b-4 border-b-transparent hover:border-b-indigo-500">
+                            <div class="bg-slate-50 py-12 flex items-center justify-center text-6xl relative select-none group-hover:scale-105 transition-transform duration-300">
+                                <span>${item.emoji || '🎁'}</span>
+                            </div>
+                            <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                                <div class="space-y-1">
+                                    <h3 class="font-bold text-slate-800 text-base group-hover:text-indigo-600 transition-colors">${item.name}</h3>
+                                    <p class="text-xs text-slate-500 line-clamp-2">${item.desc || ''}</p>
+                                </div>
+                                <div class="flex items-center justify-between border-t border-slate-50 pt-3">
+                                    <span class="font-bold text-lg text-slate-900">¥${item.price.toLocaleString()}</span>
+                                    <button onclick="window.purchaseDemo('${item.name}')" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 text-xs font-semibold shadow-sm transition-all duration-300 flex items-center gap-1">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        <span>カートに入れる</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // --- 管理画面：お知らせのリスト描画 ---
+            adminNewsList.innerHTML = "";
+            appData.news.forEach(item => {
+                adminNewsList.innerHTML += `
+                    <div class="flex items-center justify-between bg-slate-50 hover:bg-slate-100/80 p-3 rounded-xl border border-slate-100 gap-3 text-xs">
+                        <div class="min-w-0 flex-grow">
+                            <p class="font-bold text-slate-500 flex items-center gap-1">
+                                <span>${item.date}</span>
+                                ${item.tag ? `<span class="bg-indigo-100 text-indigo-700 px-1 py-0.2 rounded text-[9px] font-bold">${item.tag}</span>` : ''}
+                            </p>
+                            <p class="text-slate-700 truncate mt-0.5">${item.content}</p>
+                        </div>
+                        <button onclick="window.deleteNews('${item.id}')" class="text-rose-500 hover:text-rose-700 p-1 rounded hover:bg-rose-50 shrink-0 transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            // --- 管理画面：グッズのリスト描画 ---
+            adminGoodsList.innerHTML = "";
+            appData.goods.forEach(item => {
+                adminGoodsList.innerHTML += `
+                    <div class="flex items-center justify-between bg-slate-50 hover:bg-slate-100/80 p-3 rounded-xl border border-slate-100 gap-3 text-xs">
+                        <div class="min-w-0 flex-grow flex items-center gap-2">
+                            <span class="text-xl shrink-0">${item.emoji || '🎁'}</span>
+                            <div class="min-w-0">
+                                <p class="font-bold text-slate-800 truncate">${item.name}</p>
+                                <p class="text-slate-500">¥${item.price.toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <button onclick="window.deleteGoods('${item.id}')" class="text-rose-500 hover:text-rose-700 p-1 rounded hover:bg-rose-50 shrink-0 transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        // デモグッズ購入トースト
+        window.purchaseDemo = function(name) {
+            showToast(`「${name}」をデモカートに追加しました！（実際には決済されません）`);
+        };
+
+        // お知らせ追加処理
+        async function handleAddNews() {
+            const dateInput = document.getElementById("admin-news-date");
+            const tagInput = document.getElementById("admin-news-tag");
+            const contentInput = document.getElementById("admin-news-content");
+
+            const date = dateInput.value || new Date().toISOString().split('T')[0];
+            const tag = tagInput.value.trim();
+            const content = contentInput.value.trim();
+
+            if (!content) {
+                showToast("お知らせの内容を入力してください。", "error");
+                return;
+            }
+
+            const newId = 'news-' + Date.now();
+            const newItem = { id: newId, date, tag, content };
+
+            if (isFirebaseMode) {
+                try {
+                    const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                    await addDoc(collection(db, "news"), newItem);
+                    showToast("Firebaseお知らせを正常に投稿しました！");
+                } catch (err) {
+                    showToast("Firestore連携エラー: " + err.message, "error");
+                    return;
+                }
+            } else {
+                appData.news.unshift(newItem);
+                saveLocalData();
+                showToast("お知らせを登録しました！(デモ)");
+            }
+
+            contentInput.value = "";
+            tagInput.value = "";
+            renderUI();
+        }
+
+        // グッズ追加処理
+        async function handleAddGoods() {
+            const nameInput = document.getElementById("admin-goods-name");
+            const priceInput = document.getElementById("admin-goods-price");
+            const emojiSelect = document.getElementById("admin-goods-emoji");
+            const descInput = document.getElementById("admin-goods-desc");
+
+            const name = nameInput.value.trim();
+            const price = parseInt(priceInput.value);
+            const emoji = emojiSelect.value;
+            const desc = descInput.value.trim();
+
+            if (!name || isNaN(price)) {
+                showToast("商品名と有効な価格を入力してください。", "error");
+                return;
+            }
+
+            const newId = 'goods-' + Date.now();
+            const newItem = { id: newId, name, price, emoji, desc };
+
+            if (isFirebaseMode) {
+                try {
+                    const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                    await addDoc(collection(db, "goods"), newItem);
+                    showToast("Firebaseにグッズを正常に登録しました！");
+                } catch (err) {
+                    showToast("Firestore連携エラー: " + err.message, "error");
+                    return;
+                }
+            } else {
+                appData.goods.unshift(newItem);
+                saveLocalData();
+                showToast("グッズを登録しました！(デモ)");
+            }
+
+            nameInput.value = "";
+            priceInput.value = "";
+            descInput.value = "";
+            renderUI();
+        }
+
+        // お知らせ削除処理
+        window.deleteNews = async function(id) {
+            if (isFirebaseMode) {
+                try {
+                    const { collection, query, where, getDocs, deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                    const q = query(collection(db, "news"), where("id", "==", id));
+                    const snapshot = await getDocs(q);
+                    snapshot.forEach(async (document) => {
+                        await deleteDoc(doc(db, "news", document.id));
+                    });
+                    showToast("Firebase上からお知らせを削除しました。");
+                    fetchFirebaseData();
+                } catch (err) {
+                    showToast("削除エラー: " + err.message, "error");
+                }
+            } else {
+                appData.news = appData.news.filter(item => item.id !== id);
+                saveLocalData();
+                showToast("お知らせを削除しました。(デモ)");
+                renderUI();
+            }
+        };
+
+        // グッズ削除処理
+        window.deleteGoods = async function(id) {
+            if (isFirebaseMode) {
+                try {
+                    const { collection, query, where, getDocs, deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                    const q = query(collection(db, "goods"), where("id", "==", id));
+                    const snapshot = await getDocs(q);
+                    snapshot.forEach(async (document) => {
+                        await deleteDoc(doc(db, "goods", document.id));
+                    });
+                    showToast("Firebase上からグッズを削除しました。");
+                    fetchFirebaseData();
+                } catch (err) {
+                    showToast("削除エラー: " + err.message, "error");
+                }
+            } else {
+                appData.goods = appData.goods.filter(item => item.id !== id);
+                saveLocalData();
+                showToast("グッズを削除しました。(デモ)");
+                renderUI();
+            }
+        };
+
+        // Dynamic Firebase Initializer
+        async function connectFirebase(config) {
+            try {
+                // ES Modules 動的インポート
+                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
+                const { getAuth } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
+                const { getFirestore } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+
+                firebaseApp = initializeApp(config);
+                auth = getAuth(firebaseApp);
+                db = getFirestore(firebaseApp);
+
+                isFirebaseMode = true;
+                
+                // バッジの表記を変更
+                const badge = document.getElementById("mode-badge");
+                badge.className = "hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>Firestore連携中`;
+
+                showToast("Firebase環境に正常に接続しました！");
+                
+                // データ同期
+                fetchFirebaseData();
+                
+            } catch (err) {
+                showToast("Firebaseの初期化に失敗しました。認証情報の構文が正しいか確認してください。", "error");
+                console.error(err);
+                isFirebaseMode = false;
+            }
+        }
+
+        // Firebase（Firestore）からリアルタイムにデータをロード
+        async function fetchFirebaseData() {
+            if (!isFirebaseMode) return;
+            try {
+                const { collection, getDocs } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                
+                // お知らせ一覧
+                const newsSnapshot = await getDocs(collection(db, "news"));
+                appData.news = [];
+                newsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    appData.news.push({ id: data.id, date: data.date, tag: data.tag, content: data.content });
+                });
+
+                // グッズ一覧
+                const goodsSnapshot = await getDocs(collection(db, "goods"));
+                appData.goods = [];
+                goodsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    appData.goods.push({ id: data.id, name: data.name, price: data.price, emoji: data.emoji, desc: data.desc });
+                });
+
+                renderUI();
+            } catch (err) {
+                showToast("Firestoreデータの読み込みに失敗しました: " + err.message, "error");
+            }
+        }
+
+        // ログイン処理 (デモ & Firebase共用)
+        async function handleLogin() {
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value;
+
+            if (!email || !password) {
+                showToast("メールアドレスとパスワードを入力してください。", "error");
+                return;
+            }
+
+            if (isFirebaseMode) {
+                // 本番のFirebase認証
+                try {
+                    const { signInWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
+                    await signInWithEmailAndPassword(auth, email, password);
+                    isLoggedIn = true;
+                    showToast("管理者ログインに成功しました。");
+                    updateLoginStateUI();
+                } catch (err) {
+                    showToast("ログイン失敗: " + err.message, "error");
+                }
+            } else {
+                // デモ認証
+                if (email === "admin@example.com" && password === "password123") {
+                    isLoggedIn = true;
+                    showToast("デモ管理者ログインに成功しました！");
+                    updateLoginStateUI();
+                } else {
+                    showToast("認証に失敗しました。デモ用の情報を確認してください。", "error");
+                }
+            }
+        }
+
+        // ログアウト
+        async function handleLogout() {
+            if (isFirebaseMode) {
+                try {
+                    const { signOut } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
+                    await signOut(auth);
+                } catch (err) {
+                    console.error("Firebase Signout Error", err);
+                }
+            }
+            isLoggedIn = false;
+            showToast("ログアウトしました。");
+            updateLoginStateUI();
+            toggleViews(false); // 閲覧画面へ戻す
+        }
+
+        // ログイン状況に応じたヘッダー変更
+        function updateLoginStateUI() {
+            const loginBtn = document.getElementById("nav-login-btn");
+            const logoutBtn = document.getElementById("nav-logout-btn");
+            const adminBtn = document.getElementById("nav-admin-btn");
+            const viewBtn = document.getElementById("nav-view-btn");
+            const demoLoginInfo = document.getElementById("demo-login-info");
+
+            if (isLoggedIn) {
+                loginBtn.classList.add("hidden");
+                logoutBtn.classList.remove("hidden");
+                adminBtn.classList.remove("hidden");
+                viewBtn.classList.add("hidden");
+                document.getElementById("login-modal").classList.add("hidden");
+                
+                // ログインしたら自動で管理画面に遷移
+                toggleViews(true);
+            } else {
+                loginBtn.classList.remove("hidden");
+                logoutBtn.classList.add("hidden");
+                adminBtn.classList.add("hidden");
+                viewBtn.classList.add("hidden");
+                toggleViews(false);
+            }
+
+            // Firebaseモード時はデモ説明枠を隠す
+            if (isFirebaseMode) {
+                demoLoginInfo.classList.add("hidden");
+            } else {
+                demoLoginInfo.classList.remove("hidden");
+            }
+        }
+
+        // 閲覧モード・管理モードの表示切り替え
+        function toggleViews(showAdmin) {
+            const userView = document.getElementById("user-view");
+            const adminView = document.getElementById("admin-view");
+            const adminBtn = document.getElementById("nav-admin-btn");
+            const viewBtn = document.getElementById("nav-view-btn");
+            const hero = document.getElementById("hero-section");
+
+            if (showAdmin) {
+                userView.classList.add("hidden");
+                adminView.classList.remove("hidden");
+                adminBtn.classList.add("hidden");
+                viewBtn.classList.remove("hidden");
+                hero.classList.add("hidden"); // 管理画面ではヒーローを隠してすっきりさせる
+            } else {
+                userView.classList.remove("hidden");
+                adminView.classList.add("hidden");
+                if (isLoggedIn) {
+                    adminBtn.classList.remove("hidden");
+                }
+                viewBtn.classList.add("hidden");
+                hero.classList.remove("hidden");
+            }
+        }
+
+        // イベントバインディング
+        document.addEventListener("DOMContentLoaded", () => {
+            // 初期データのロード
+            initLocalData();
+            renderUI();
+
+            // Firebase 設定がローカル保存されていれば自動読み込み
+            const savedConfig = localStorage.getItem("firebase_custom_config");
+            if (savedConfig) {
+                try {
+                    const parsed = JSON.parse(savedConfig);
+                    // フォームに反映
+                    document.getElementById("fb-apiKey").value = parsed.apiKey || "";
+                    document.getElementById("fb-authDomain").value = parsed.authDomain || "";
+                    document.getElementById("fb-projectId").value = parsed.projectId || "";
+                    document.getElementById("fb-appId").value = parsed.appId || "";
+                    
+                    connectFirebase(parsed);
+                } catch (e) {
+                    localStorage.removeItem("firebase_custom_config");
+                }
+            }
+
+            // モーダル開閉
+            document.getElementById("nav-login-btn").addEventListener("click", () => {
+                document.getElementById("login-modal").classList.remove("hidden");
+            });
+            document.getElementById("btn-close-login").addEventListener("click", () => {
+                document.getElementById("login-modal").classList.add("hidden");
+            });
+
+            // ログイン実行
+            document.getElementById("btn-submit-login").addEventListener("click", handleLogin);
+
+            // ログアウト実行
+            document.getElementById("nav-logout-btn").addEventListener("click", handleLogout);
+
+            // 画面切り替えボタン
+            document.getElementById("nav-admin-btn").addEventListener("click", () => toggleViews(true));
+            document.getElementById("nav-view-btn").addEventListener("click", () => toggleViews(false));
+
+            // お知らせ新規登録
+            document.getElementById("btn-add-news").addEventListener("click", handleAddNews);
+
+            // グッズ新規登録
+            document.getElementById("btn-add-goods").addEventListener("click", handleAddGoods);
+
+            // Firebase 設定保存
+            document.getElementById("btn-save-db").addEventListener("click", () => {
+                const apiKey = document.getElementById("fb-apiKey").value.trim();
+                const authDomain = document.getElementById("fb-authDomain").value.trim();
+                const projectId = document.getElementById("fb-projectId").value.trim();
+                const appId = document.getElementById("fb-appId").value.trim();
+
+                if (!apiKey || !authDomain || !projectId || !appId) {
+                    showToast("すべての設定フィールドを入力してください。", "error");
+                    return;
+                }
+
+                const config = { apiKey, authDomain, projectId, appId };
+                localStorage.setItem("firebase_custom_config", JSON.stringify(config));
+                connectFirebase(config);
+                toggleSection('db-config-card'); // 閉じる
+            });
+
+            // Firebase 設定クリア
+            document.getElementById("btn-clear-db").addEventListener("click", () => {
+                localStorage.removeItem("firebase_custom_config");
+                document.getElementById("fb-apiKey").value = "";
+                document.getElementById("fb-authDomain").value = "";
+                document.getElementById("fb-projectId").value = "";
+                document.getElementById("fb-appId").value = "";
+                
+                isFirebaseMode = false;
+                const badge = document.getElementById("mode-badge");
+                badge.className = "hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>デモモード動作中`;
+
+                // ローカルデータをリロード
+                initLocalData();
+                renderUI();
+                showToast("Firebase設定を解除し、デモモードに戻しました。");
+                toggleSection('db-config-card'); // 閉じる
+                updateLoginStateUI();
+            });
+        });
+    </script>
+</body>
+</html>
