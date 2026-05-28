@@ -1162,107 +1162,365 @@
 <button id="btn-add-character">保存する</button>
 
 <script type="module">
-    // Firebaseの初期化コード（すでに書いてあるはずです）
+    // ==================== Firebase 読み込みと初期化 ====================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore.js";
-    
-    const firebaseConfig = { ... };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app); // 👈 すでにこれがある場合は、2個書かなくてOKです！
+    import { getFirestore, collection, addDoc, doc, setDoc, getDocs, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore.js";
+    import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-auth.js";
 
-    // --------------------------------------------------
-    //すでにある処理（例：お知らせ投稿）
-    // --------------------------------------------------
-    document.getElementById("btn-add-news").addEventListener("click", async () => {
-        // お知らせの処理...
+    // ⚠️ ご自身のFirebase設定（プロジェクトのキーなど）に書き換えてください
+    const firebaseConfig = {
+        apiKey: "...",
+        authDomain: "...",
+        projectId: "...",
+        storageBucket: "...",
+        messagingSenderId: "...",
+        appId: "..."
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ==================== お問い合わせ送信処理 ====================
+    window.handleContactSubmit = async function(event) {
+        event.preventDefault();
+        const name = document.getElementById("contact-name").value;
+        const email = document.getElementById("contact-email").value;
+        const message = document.getElementById("contact-message").value;
+        try {
+            await addDoc(collection(db, "contacts"), { name, email, message, timestamp: serverTimestamp() });
+            showToast("📬 お問い合わせを送信しました！", "success");
+            document.getElementById("contact-form").reset();
+        } catch (e) {
+            console.error("お問い合わせ送信エラー:", e);
+            showToast("送信に失敗しました。設定を確認してください。", "error");
+        }
+    };
+
+    // トースト通知の表示関数
+    function showToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const toast = document.createElement("div");
+        toast.className = `px-4 py-3 rounded-xl shadow-lg font-bold text-sm text-white fade-in flex items-center gap-2 transition-all duration-300 transform translate-y-0`;
+        if (type === "success") {
+            toast.classList.add("bg-emerald-600");
+        } else if (type === "error") {
+            toast.classList.add("bg-rose-600");
+        } else {
+            toast.classList.add("bg-indigo-600");
+        }
+        toast.innerHTML = `${message}`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            toast.style.transform = "translateY(10px)";
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // ==================== Firebase Authentication (ログイン・管理) ====================
+    document.getElementById("nav-login-btn").addEventListener("click", () => {
+        document.getElementById("login-modal").classList.remove("hidden");
+    });
+    document.getElementById("btn-close-login").addEventListener("click", () => {
+        document.getElementById("login-modal").classList.add("hidden");
     });
 
-    // --------------------------------------------------
-    // ⭐️【ここに貼り付けます！】
-    // --------------------------------------------------
-    document.getElementById("btn-add-character").addEventListener("click", async () => {
-        const name = document.getElementById("admin-char-name").value;
-        const description = document.getElementById("admin-char-desc").value;
+    document.getElementById("btn-submit-login").addEventListener("click", async () => {
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            showToast("🔒 管理者としてログインしました");
+            document.getElementById("login-modal").classList.add("hidden");
+            document.getElementById("login-email").value = "";
+            document.getElementById("login-password").value = "";
+        } catch (error) {
+            console.error("ログインエラー:", error);
+            showToast("ログインに失敗しました。認証情報を確認してください。", "error");
+        }
+    });
 
-        if (!name || !description) {
-            alert("名前と説明を入力してください");
+    document.getElementById("nav-logout-btn").addEventListener("click", async () => {
+        try {
+            await signOut(auth);
+            showToast("👋 ログアウトしました");
+            switchPage('home');
+        } catch (error) {
+            console.error("ログアウトエラー:", error);
+        }
+    });
+
+    document.getElementById("nav-admin-btn").addEventListener("click", () => {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+        document.getElementById('admin-view').classList.remove('hidden');
+        document.getElementById('hero-section').classList.add('hidden');
+        document.getElementById("nav-admin-btn").classList.add("hidden");
+        document.getElementById("nav-view-btn").classList.remove("hidden");
+        document.getElementById("user-nav-links").classList.add("hidden");
+        document.getElementById("mobile-nav-links").classList.add("hidden");
+    });
+
+    document.getElementById("nav-view-btn").addEventListener("click", () => {
+        switchPage('home');
+    });
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById("nav-login-btn").classList.add("hidden");
+            document.getElementById("nav-logout-btn").classList.remove("hidden");
+            document.getElementById("nav-admin-btn").classList.remove("hidden");
+        } else {
+            document.getElementById("nav-login-btn").classList.remove("hidden");
+            document.getElementById("nav-logout-btn").classList.add("hidden");
+            document.getElementById("nav-admin-btn").classList.add("hidden");
+            document.getElementById("nav-view-btn").classList.add("hidden");
+        }
+    });
+
+    // ==================== Firestore データ同期・描画処理 ====================
+    function handleFirestoreError(error) {
+        console.error("Firestoreエラー:", error);
+        if (error.code === 'permission-denied' || error.message.includes('Firestore API')) {
+            document.getElementById("error-setup-modal").classList.remove("hidden");
+        }
+    }
+
+    async function loadAllData() {
+        try {
+            // 1. お知らせ (news) の取得
+            const newsSnap = await getDocs(collection(db, "news"));
+            appData.news = [];
+            newsSnap.forEach(docSnap => { appData.news.push({ fsId: docSnap.id, ...docSnap.data() }); });
+            renderNews();
+
+            // 2. グッズ (goods) の取得
+            const goodsSnap = await getDocs(collection(db, "goods"));
+            appData.goods = [];
+            goodsSnap.forEach(docSnap => { appData.goods.push({ fsId: docSnap.id, ...docSnap.data() }); });
+            renderGoods();
+
+            // 3. キャラクター (characters) の取得
+            const charsSnap = await getDocs(collection(db, "characters"));
+            appData.characters = [];
+            charsSnap.forEach(docSnap => { appData.characters.push({ fsId: docSnap.id, ...docSnap.data() }); });
+            renderCharacters();
+
+            // 4. カスタムページ (pages) の取得
+            const pagesSnap = await getDocs(collection(db, "pages"));
+            appData.pages = [];
+            pagesSnap.forEach(docSnap => { appData.pages.push({ fsId: docSnap.id, ...docSnap.data() }); });
+            renderCustomPages();
+
+            // 5. アクセスログ (access_logs) の取得
+            const logsSnap = await getDocs(collection(db, "access_logs"));
+            appData.logs = [];
+            logsSnap.forEach(docSnap => { appData.logs.push({ fsId: docSnap.id, ...docSnap.data() }); });
+            appData.logs.sort((a, b) => new Date(b.time) - new Date(a.time));
+            renderLogs();
+        } catch (error) {
+            handleFirestoreError(error);
+        }
+    }
+
+    // --- 各種 画面レンダリング関数 ---
+    function renderNews() {
+        const container = document.getElementById("news-list-container");
+        const adminList = document.getElementById("admin-news-list");
+        if (appData.news.length === 0) {
+            container.innerHTML = `現在お知らせはありません。`;
+            adminList.innerHTML = `データなし`;
             return;
         }
+        container.innerHTML = appData.news.map(item => `${escapeHtml(item.date)} ${escapeHtml(item.tag)} ${escapeHtml(item.content)}`).join('');
+        adminList.innerHTML = appData.news.map(item => `${escapeHtml(item.date)} - ${escapeHtml(item.content)}`).join('');
+    }
 
-        try {
-            await addDoc(collection(db, "characters"), {
-                name: name,
-                description: description,
-                timestamp: serverTimestamp()
-            });
-            alert("👤 キャラクターを保存しました！");
-            document.getElementById("admin-char-name").value = "";
-            document.getElementById("admin-char-desc").value = "";
-        } catch (e) {
-            console.error("エラーの詳細:", e);
-            alert("保存失敗: " + e.message);
+    // 数値型のズレを防止したグッズ一覧の描画
+    function renderGoods() {
+        const grid = document.getElementById("goods-grid");
+        const adminList = document.getElementById("admin-goods-list");
+        if (appData.goods.length === 0) {
+            grid.innerHTML = `現在販売中のグッズはありません。`;
+            adminList.innerHTML = `データなし`;
+            return;
         }
+        grid.innerHTML = appData.goods.map(item => `${escapeHtml(item.emoji)}${escapeHtml(item.name)} ${escapeHtml(item.desc)} ${Number(item.price).toLocaleString()} 円`).join('');
+        adminList.innerHTML = appData.goods.map(item => `${escapeHtml(item.emoji)} ${escapeHtml(item.name)}`).join('');
+    }
+
+    function renderCharacters() {
+        const grid = document.getElementById("characters-grid");
+        const tableBody = document.getElementById("characters-table-body");
+        const adminList = document.getElementById("admin-chars-list");
+        if (appData.characters.length === 0) {
+            grid.innerHTML = `登録されたキャラクターはいません。`;
+            tableBody.innerHTML = `データがありません`;
+            adminList.innerHTML = `データなし`;
+            return;
+        }
+        grid.innerHTML = appData.characters.map(char => `${escapeHtml(char.emoji)} ${escapeHtml(char.name)} ${escapeHtml(char.tag)} ${escapeHtml(char.desc)}`).join('');
+        tableBody.innerHTML = appData.characters.map(char => `${escapeHtml(char.emoji)}${escapeHtml(char.name)}`).join('');
+        adminList.innerHTML = appData.characters.map(char => `${escapeHtml(char.emoji)} ${escapeHtml(char.name)} ${escapeHtml(char.tag)}`).join('');
+    }
+
+    function renderCustomPages() {
+        const navContainer = document.getElementById("dynamic-nav-links");
+        const mobileContainer = document.getElementById("dynamic-mobile-links");
+        const adminList = document.getElementById("admin-pages-list");
+        if (appData.pages.length === 0) {
+            if(navContainer) navContainer.innerHTML = "";
+            if(mobileContainer) mobileContainer.innerHTML = "";
+            adminList.innerHTML = `公開中のカスタムページはありません。`;
+            return;
+        }
+        if(navContainer) navContainer.innerHTML = appData.pages.map(page => `${escapeHtml(page.title)}`).join('');
+        if(mobileContainer) mobileContainer.innerHTML = appData.pages.map(page => `${escapeHtml(page.title)}`).join('');
+        adminList.innerHTML = appData.pages.map(page => `${escapeHtml(page.title)}`).join('');
+    }
+
+    function renderLogs() {
+        const tbody = document.getElementById("admin-logs-tbody");
+        if (appData.logs.length === 0) {
+            tbody.innerHTML = `ログがありません。`;
+            return;
+        }
+        tbody.innerHTML = appData.logs.map(log => `${escapeHtml(log.time)} ${escapeHtml(log.page)}`).join('');
+    }
+
+    // ==================== 管理者用：データ書き込み・削除アクション ====================
+    // ① お知らせ投稿処理（強制リフレッシュ対応）
+    document.getElementById("btn-add-news").addEventListener("click", async () => {
+        const date = document.getElementById("admin-news-date").value;
+        const tag = document.getElementById("admin-news-tag").value || "NEWS";
+        const content = document.getElementById("admin-news-content").value;
+        if (!date || !content) return showToast("日付と本文を入力してください", "error");
+        try {
+            await addDoc(collection(db, "news"), { date, tag, content, timestamp: serverTimestamp() });
+            showToast("📢 お知らせを投稿しました");
+            document.getElementById("admin-news-content").value = "";
+            await loadAllData();
+        } catch (e) { handleFirestoreError(e); }
     });
 
-</script> ```
+    // ② グッズ新規登録処理（Number数値変換＆強制リフレッシュ対応）
+    document.getElementById("btn-add-goods").addEventListener("click", async () => {
+        const name = document.getElementById("admin-goods-name").value;
+        const price = document.getElementById("admin-goods-price").value;
+        const emoji = document.getElementById("admin-goods-emoji").value;
+        const desc = document.getElementById("admin-goods-desc").value;
+        if (!name || !price || !desc) return showToast("未入力の項目があります", "error");
+        try {
+            await addDoc(collection(db, "goods"), { name, price: Number(price), emoji, desc, timestamp: serverTimestamp() });
+            showToast("🛍 グッズを新規登録しました");
+            document.getElementById("admin-goods-name").value = "";
+            document.getElementById("admin-goods-price").value = "";
+            document.getElementById("admin-goods-desc").value = "";
+            await loadAllData();
+        } catch (e) { handleFirestoreError(e); }
+    });
 
----
+    // ③ キャラクター追加 / 編集保存（ID競合と不要文字を完全に解消した統一コード）
+    document.getElementById("btn-save-char").addEventListener("click", async () => {
+        const id = document.getElementById("admin-char-id").value;
+        const name = document.getElementById("admin-char-name").value;
+        const emoji = document.getElementById("admin-char-emoji").value || "👤";
+        const tag = document.getElementById("admin-char-tag").value || "一般";
+        const power = document.getElementById("admin-char-power").value || 3;
+        const speed = document.getElementById("admin-char-speed").value || 3;
+        const skill = document.getElementById("admin-char-skill").value;
+        const desc = document.getElementById("admin-char-desc").value;
 
-## ⚠️ 貼り付けるときの2つの注意点
+        if (!name || !skill || !desc) return showToast("必須項目（名前・得意なこと・紹介文）を入力してください", "error");
 
-1. **`const db = getFirestore(app);` がダブらないようにする**
-   すでに設定の一番上で `const db = ...` と書かれている場合は、貼り付けるコードの1行目にある `const db = getFirestore(app);` は**削除**して、`document.getElementById...` の部分だけを貼り付けてください（2回同じ名前で定義するとエラーになります）。
-2. **`serverTimestamp` のエラーが出る場合**
-   もしボタンを押したときに「`serverTimestamp is not defined`」というエラーが出た場合は、スクリプトの1番上にある `import { ... } from "...firebase-firestore.js"` のカッコの中に `, serverTimestamp` を書き足してください。
-
-        // ④ 新しいカスタムページの作成
-        document.getElementById("btn-add-page").addEventListener("click", async () => {
-            const title = document.getElementById("admin-page-title").value;
-            const content = document.getElementById("admin-page-content").value;
-
-            if (!title || !content) return showToast("タイトルと本文を入力してください", "error");
-
-            try {
-                await addDoc(collection(db, "pages"), { title, content, timestamp: serverTimestamp() });
-                showToast("📄 新しいカスタムページを公開しました");
-                document.getElementById("admin-page-title").value = "";
-                document.getElementById("admin-page-content").value = "";
-                loadAllData();
-            } catch (e) { handleFirestoreError(e); }
-        });
-
-        // ⑤ 共通削除処理
-        window.deleteData = async function(colName, fsId) {
-            if (!confirm("本当にこのデータを削除してもよろしいですか？")) return;
-            try {
-                await deleteDoc(doc(db, colName, fsId));
-                showToast("🗑 データを削除しました");
-                loadAllData();
-            } catch (e) { handleFirestoreError(e); }
+        const charData = {
+            name, emoji, tag,
+            power: Math.min(5, Math.max(1, Number(power))),
+            speed: Math.min(5, Math.max(1, Number(speed))),
+            skill, desc, timestamp: serverTimestamp()
         };
 
-        // ⑥ 閲覧者ログをすべて削除
-        document.getElementById("btn-clear-logs").addEventListener("click", async () => {
-            if (!confirm("すべてのアクセスログを完全に削除します。よろしいですか？")) return;
-            try {
-                // 各ログを一件ずつ削除
-                const promises = appData.logs.map(log => deleteDoc(doc(db, "access_logs", log.fsId)));
-                await Promise.all(promises);
-                showToast("👀 ログ履歴をすべてクリアしました");
-                loadAllData();
-            } catch (e) { handleFirestoreError(e); }
-        });
+        try {
+            if (id) {
+                await setDoc(doc(db, "characters", id), charData, { merge: true });
+                showToast("🌟 キャラクター情報を更新しました");
+            } else {
+                await addDoc(collection(db, "characters"), charData);
+                showToast("🌟 新しいキャラクターを追加しました");
+            }
+            clearCharacterForm();
+            await loadAllData();
+        } catch (e) { handleFirestoreError(e); }
+    });
 
+    window.editCharacterForm = function(id) {
+        const char = appData.characters.find(c => c.fsId === id);
+        if (!char) return;
+        document.getElementById("admin-char-id").value = char.fsId;
+        document.getElementById("admin-char-name").value = char.name;
+        document.getElementById("admin-char-emoji").value = char.emoji;
+        document.getElementById("admin-char-tag").value = char.tag;
+        document.getElementById("admin-char-power").value = char.power;
+        document.getElementById("admin-char-speed").value = char.speed;
+        document.getElementById("admin-char-skill").value = char.skill;
+        document.getElementById("admin-char-desc").value = char.desc;
+        document.getElementById("btn-save-char").innerText = "更新（上書き）する";
+        showToast("フォームにデータを読み込みました。", "info");
+    };
 
-        // ==================== 初期実行 ====================
-        
-        // 起動時にデータを即座にロード
-        loadAllData();
-        
-        // 初回のアクセスログ（ホーム）を記録
-        recordAccessLog("home");
+    function clearCharacterForm() {
+        document.getElementById("admin-char-id").value = "";
+        document.getElementById("admin-char-name").value = "";
+        document.getElementById("admin-char-emoji").value = "";
+        document.getElementById("admin-char-tag").value = "";
+        document.getElementById("admin-char-power").value = "";
+        document.getElementById("admin-char-speed").value = "";
+        document.getElementById("admin-char-skill").value = "";
+        document.getElementById("admin-char-desc").value = "";
+        document.getElementById("btn-save-char").innerText = "保存する";
+    }
+    document.getElementById("btn-clear-char-form").addEventListener("click", clearCharacterForm);
 
-    </script>
+    // ④ 新しいカスタムページの作成
+    document.getElementById("btn-add-page").addEventListener("click", async () => {
+        const title = document.getElementById("admin-page-title").value;
+        const content = document.getElementById("admin-page-content").value;
+        if (!title || !content) return showToast("タイトルと本文を入力してください", "error");
+        try {
+            await addDoc(collection(db, "pages"), { title, content, timestamp: serverTimestamp() });
+            showToast("📄 新しいカスタムページを公開しました");
+            document.getElementById("admin-page-title").value = "";
+            document.getElementById("admin-page-content").value = "";
+            await loadAllData();
+        } catch (e) { handleFirestoreError(e); }
+    });
+
+    // ⑤ 共通削除処理
+    window.deleteData = async function(colName, fsId) {
+        if (!confirm("本当にこのデータを削除してもよろしいですか？")) return;
+        try {
+            await deleteDoc(doc(db, colName, fsId));
+            showToast("🗑 データを削除しました");
+            await loadAllData();
+        } catch (e) { handleFirestoreError(e); }
+    };
+
+    // ⑥ 閲覧者ログをすべて削除
+    document.getElementById("btn-clear-logs").addEventListener("click", async () => {
+        if (!confirm("すべてのアクセスログを完全に削除します。よろしいですか？")) return;
+        try {
+            const promises = appData.logs.map(log => deleteDoc(doc(db, "access_logs", log.fsId)));
+            await Promise.all(promises);
+            showToast("👀 ログ履歴をすべてクリアしました");
+            await loadAllData();
+        } catch (e) { handleFirestoreError(e); }
+    });
+
+    // ==================== 初期実行 ====================
+    loadAllData();
+    if (typeof recordAccessLog === "function") recordAccessLog("home");
+
+</script>
 </body>
 // 【修正版】① お知らせ投稿処理
         document.getElementById("btn-add-news").addEventListener("click", async () => {
