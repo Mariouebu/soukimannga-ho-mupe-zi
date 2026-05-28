@@ -1157,6 +1157,63 @@
             document.getElementById("btn-save-char").innerText = "保存する";
         }
         document.getElementById("btn-clear-char-form").addEventListener("click", clearCharacterForm);
+        <input id="admin-char-name" ...>
+<textarea id="admin-char-desc" ...></textarea>
+<button id="btn-add-character">キャラクターを保存</button>
+
+<script type="module">
+    // Firebaseの初期化コード（すでに書いてあるはずです）
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore.js";
+    
+    const firebaseConfig = { ... };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app); // 👈 すでにこれがある場合は、2個書かなくてOKです！
+
+    // --------------------------------------------------
+    //すでにある処理（例：お知らせ投稿）
+    // --------------------------------------------------
+    document.getElementById("btn-add-news").addEventListener("click", async () => {
+        // お知らせの処理...
+    });
+
+    // --------------------------------------------------
+    // ⭐️【ここに貼り付けます！】
+    // --------------------------------------------------
+    document.getElementById("btn-add-character").addEventListener("click", async () => {
+        const name = document.getElementById("admin-char-name").value;
+        const description = document.getElementById("admin-char-desc").value;
+
+        if (!name || !description) {
+            alert("名前と説明を入力してください");
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "characters"), {
+                name: name,
+                description: description,
+                timestamp: serverTimestamp()
+            });
+            alert("👤 キャラクターを保存しました！");
+            document.getElementById("admin-char-name").value = "";
+            document.getElementById("admin-char-desc").value = "";
+        } catch (e) {
+            console.error("エラーの詳細:", e);
+            alert("保存失敗: " + e.message);
+        }
+    });
+
+</script> ```
+
+---
+
+## ⚠️ 貼り付けるときの2つの注意点
+
+1. **`const db = getFirestore(app);` がダブらないようにする**
+   すでに設定の一番上で `const db = ...` と書かれている場合は、貼り付けるコードの1行目にある `const db = getFirestore(app);` は**削除**して、`document.getElementById...` の部分だけを貼り付けてください（2回同じ名前で定義するとエラーになります）。
+2. **`serverTimestamp` のエラーが出る場合**
+   もしボタンを押したときに「`serverTimestamp is not defined`」というエラーが出た場合は、スクリプトの1番上にある `import { ... } from "...firebase-firestore.js"` のカッコの中に `, serverTimestamp` を書き足してください。
 
         // ④ 新しいカスタムページの作成
         document.getElementById("btn-add-page").addEventListener("click", async () => {
