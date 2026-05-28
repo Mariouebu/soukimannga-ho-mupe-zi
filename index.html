@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Website & Admin System</title>
+    <title>Official Website & Advanced Admin System</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -12,68 +12,63 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
-        .fade-in { animation: fadeIn 0.2s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .fade-in { animation: fadeIn 0.25s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- ヘッダー・ナビゲーション -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
-            <a href="#" onclick="switchPage('home')" class="flex items-center gap-1.5 font-bold text-base md:text-xl text-indigo-600 shrink-0">
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-2">
+            <a href="#" onclick="switchPage('home')" class="flex items-center gap-2 font-bold text-base md:text-xl text-indigo-600 shrink-0 hover:opacity-85 transition-opacity">
                 <i class="fa-solid fa-shop"></i>
                 <span>MY SHOP</span>
             </a>
             
-            <!-- ナビゲーションリンク（新追加） -->
-            <nav id="user-nav-links" class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+            <!-- ナビゲーションリンク -->
+            <nav id="user-nav-links" class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
                 <button onclick="switchPage('home')" class="hover:text-indigo-600 transition-colors">ホーム</button>
                 <button onclick="switchPage('characters')" class="hover:text-indigo-600 transition-colors">キャラクター</button>
                 <button onclick="switchPage('contact')" class="hover:text-indigo-600 transition-colors">お問い合わせ</button>
+                <span id="dynamic-nav-links" class="flex items-center gap-6"></span>
             </nav>
 
             <!-- ボタンエリア（スマホ対応・管理者用） -->
             <div class="flex items-center gap-1.5 md:gap-3 ml-auto">
-                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] md:text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                     本番モード
                 </span>
-                <button id="nav-login-btn" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-slate-100 text-slate-700 hover:bg-indigo-600 hover:text-white transition-all shrink-0">
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    <span>ログイン</span>
+                <button id="nav-login-btn" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-indigo-600 hover:text-white transition-all shrink-0 shadow-sm">
+                    <i class="fa-solid fa-right-to-bracket"></i><span>ログイン</span>
                 </button>
-                <button id="nav-logout-btn" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-all shrink-0">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>ログアウト</span>
+                <button id="nav-logout-btn" class="hidden flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-all shrink-0 shadow-sm">
+                    <i class="fa-solid fa-right-from-bracket"></i><span>ログアウト</span>
                 </button>
-                <button id="nav-admin-btn" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-all shrink-0">
-                    <i class="fa-solid fa-sliders"></i>
-                    <span>管理画面</span>
+                <button id="nav-admin-btn" class="hidden flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-all shrink-0 shadow-sm">
+                    <i class="fa-solid fa-sliders"></i><span>管理画面</span>
                 </button>
-                <button id="nav-view-btn" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0">
-                    <i class="fa-solid fa-eye"></i>
-                    <span>サイトを見る</span>
+                <button id="nav-view-btn" class="hidden flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 shadow-sm">
+                    <i class="fa-solid fa-eye"></i><span>サイトを見る</span>
                 </button>
             </div>
         </div>
         
-        <!-- スマホ用サブナビゲーション（新追加） -->
-        <div id="mobile-nav-links" class="md:hidden flex justify-around border-t border-slate-100 bg-white py-2 text-xs font-medium text-slate-600">
-            <button onclick="switchPage('home')" class="flex flex-col items-center gap-0.5"><i class="fa-solid fa-house"></i><span>ホーム</span></button>
-            <button onclick="switchPage('characters')" class="flex flex-col items-center gap-0.5"><i class="fa-solid fa-users"></i><span>キャラ</span></button>
-            <button onclick="switchPage('contact')" class="flex flex-col items-center gap-0.5"><i class="fa-solid fa-envelope"></i><span>お問合せ</span></button>
+        <!-- スマホ用サブナビゲーション -->
+        <div id="mobile-nav-links" class="md:hidden flex justify-around border-t border-slate-100 bg-white py-2 text-xs font-semibold text-slate-600 overflow-x-auto whitespace-nowrap">
+            <button onclick="switchPage('home')" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-house"></i><span>ホーム</span></button>
+            <button onclick="switchPage('characters')" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-users"></i><span>キャラ</span></button>
+            <button onclick="switchPage('contact')" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-envelope"></i><span>お問合せ</span></button>
+            <span id="dynamic-mobile-links" class="flex"></span>
         </div>
     </header>
 
     <!-- ヒーローセクション -->
     <section id="hero-section" class="bg-gradient-to-r from-indigo-600 to-violet-700 text-white py-12 px-4 text-center">
         <div class="max-w-4xl mx-auto space-y-3">
-            <h1 class="text-2xl md:text-4xl font-extrabold">オフィシャルWEBサイト</h1>
-            <p class="text-indigo-100 text-xs md:text-sm max-w-xl mx-auto font-light">最新情報、オリジナルグッズ、キャラクター紹介ページへようこそ！</p>
+            <h1 id="hero-title" class="text-2xl md:text-4xl font-extrabold tracking-tight">オフィシャルWEBサイト</h1>
+            <p id="hero-desc" class="text-indigo-100 text-xs md:text-sm max-w-xl mx-auto font-light leading-relaxed">最新情報、オリジナルグッズ、キャラクター紹介ページへようこそ！</p>
         </div>
     </section>
 
@@ -82,59 +77,39 @@
         
         <!-- ==================== 1. ホームページ画面 ==================== -->
         <div id="page-home" class="page-content space-y-12 fade-in">
-            <section id="news-section">
+            <!-- お知らせ -->
+            <section>
                 <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-bullhorn text-indigo-600"></i><span>📢 最新お知らせ</span>
                 </h2>
-                <div id="news-list-container" class="space-y-4"><p class="text-slate-400 text-sm">読み込み中...</p></div>
+                <div id="news-list-container" class="space-y-4">
+                    <div class="text-center py-6 text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i>お知らせを読み込み中...</div>
+                </div>
             </section>
-            <section id="goods-section">
+            
+            <!-- グッズ -->
+            <section>
                 <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-bag-shopping text-indigo-600"></i><span>🛍 グッズ紹介 & 販売</span>
                 </h2>
-                <div id="goods-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"><p class="text-slate-400 text-sm">読み込み中...</p></div>
+                <div id="goods-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="col-span-full text-center py-6 text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i>グッズデータを読み込み中...</div>
+                </div>
             </section>
         </div>
 
-        <!-- ==================== 2. キャラクター紹介ページ画面 (新追加) ==================== -->
+        <!-- ==================== 2. キャラクター紹介ページ画面 ==================== -->
         <div id="page-characters" class="page-content hidden space-y-12 fade-in">
             <section>
                 <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-star text-indigo-600"></i><span>🌟 キャラクター紹介</span>
                 </h2>
-                <!-- キャラカードグリッド -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <!-- キャラ1 -->
-                    <div class="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 text-center space-y-3">
-                        <div class="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center text-4xl mx-auto border-2 border-indigo-200">🦊</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">フォックスくん</h3>
-                            <p class="text-xs text-indigo-600 font-medium">頼れるリーダー</p>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">いつも元気いっぱいでみんなを引っ張る男の子。趣味は美味しい食べ歩きと新しい冒険に出かけること！</p>
-                    </div>
-                    <!-- キャラ2 -->
-                    <div class="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 text-center space-y-3">
-                        <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center text-4xl mx-auto border-2 border-emerald-200">🐰</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">ラビちゃん</h3>
-                            <p class="text-xs text-emerald-600 font-medium">ひらめき天才発明家</p>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">のんびり屋さんに見えて、実はすごいメカを作る天才。にんじんジュースを飲むと良いアイデアが浮かびます。</p>
-                    </div>
-                    <!-- キャラ3 -->
-                    <div class="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 text-center space-y-3">
-                        <div class="w-24 h-24 bg-amber-50 rounded-full flex items-center justify-center text-4xl mx-auto border-2 border-amber-200">🐻</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">ベアさん</h3>
-                            <p class="text-xs text-amber-600 font-medium">物知りでおっとり</p>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">読書が大好きで、みんなの相談にいつも優しく乗ってくれるお兄さん。お昼寝が日課でどこでも寝ちゃいます。</p>
-                    </div>
+                <div id="characters-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="col-span-full text-center py-6 text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i>キャラクターデータを読み込み中...</div>
                 </div>
             </section>
 
-            <!-- キャラクター表 -->
+            <!-- キャラクター能力表 -->
             <section>
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                     <i class="fa-solid fa-table-list text-indigo-500"></i><span>📊 キャラクター能力表</span>
@@ -145,42 +120,21 @@
                             <thead>
                                 <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
                                     <th class="p-4">名前</th>
-                                    <th class="p-4">属性</th>
+                                    <th class="p-4">属性/タグ</th>
                                     <th class="p-4">得意なこと</th>
                                     <th class="p-4 text-center">パワー</th>
                                     <th class="p-4 text-center">スピード</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100 text-slate-700">
-                                <tr>
-                                    <td class="p-4 font-bold flex items-center gap-2"><span>🦊</span> フォックスくん</td>
-                                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-red-50 text-red-700 text-[10px] font-bold">ほのお</span></td>
-                                    <td class="p-4">ダッシュ・探索</td>
-                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐</td>
-                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐⭐</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 font-bold flex items-center gap-2"><span>🐰</span> ラビちゃん</td>
-                                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold">かぜ</span></td>
-                                    <td class="p-4">アイテム開発・工作</td>
-                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐</td>
-                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 font-bold flex items-center gap-2"><span>🐻</span> ベアさん</td>
-                                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-bold">だいち</span></td>
-                                    <td class="p-4">力仕事・料理</td>
-                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐⭐</td>
-                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐</td>
-                                </tr>
-                            </tbody>
+                            <tbody id="characters-table-body" class="divide-y divide-slate-100 text-slate-700">
+                                </tbody>
                         </table>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- ==================== 3. お問い合わせページ画面 (新追加) ==================== -->
+        <!-- ==================== 3. お問い合わせページ画面 ==================== -->
         <div id="page-contact" class="page-content hidden max-w-xl mx-auto fade-in">
             <div class="bg-white border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm space-y-6">
                 <div class="text-center">
@@ -189,94 +143,201 @@
                     </h2>
                     <p class="text-xs text-slate-400 mt-1">サイトへのご意見やご質問はこちらからお送りください。</p>
                 </div>
-                
                 <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">お名前 <span class="text-rose-500">*</span></label>
-                        <input type="text" required id="contact-name" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="山田 太郎">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">お名前 *</label>
+                        <input type="text" required id="contact-name" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス <span class="text-rose-500">*</span></label>
-                        <input type="email" required id="contact-email" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your@email.com">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス *</label>
+                        <input type="email" required id="contact-email" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">お問い合わせ内容 <span class="text-rose-500">*</span></label>
-                        <textarea required id="contact-message" rows="4" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="メッセージを入力してください"></textarea>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">お問い合わせ内容 *</label>
+                        <textarea required id="contact-message" rows="4" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="内容を入力してください。"></textarea>
                     </div>
-                    <button type="submit" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-colors shadow-md">
+                    <button type="submit" class="w-full py-2.5 bg-indigo-600 text-white font-bold rounded-lg text-sm hover:bg-indigo-700 transition-colors shadow-md">
                         メッセージを送信する
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- ==================== 4. 管理者画面 (ADMIN VIEW) ==================== -->
-        <div id="admin-view" class="hidden space-y-8 fade-in">
-            <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-2xl">
-                <h2 class="text-2xl font-bold text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-gears text-indigo-600"></i><span>🛠 管理者ダッシュボード</span></h2>
-                <p class="text-sm text-indigo-800/80 mt-1">本物のオンラインデータベース（Firebase）にデータが直接保存されます。</p>
+        <!-- ==================== 5. カスタムページ表示エリア ==================== -->
+        <div id="dynamic-page-viewer" class="page-content hidden max-w-3xl mx-auto fade-in">
+            <div class="bg-white border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm">
+                <h2 id="dynamic-view-title" class="text-2xl font-bold text-slate-900 border-b pb-4 mb-4"></h2>
+                <div id="dynamic-view-content" class="text-slate-700 space-y-4 whitespace-pre-wrap leading-relaxed text-sm md:text-base"></div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- お知らせ追加 -->
-                <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-3">
-                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-2">📢 お知らせの投稿</h3>
-                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">投稿日</label><input type="date" id="admin-news-date" class="w-full px-3 py-2 border rounded-lg text-sm"></div>
-                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">バッジ</label><input type="text" id="admin-news-tag" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="重要"></div>
-                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">本文</label><textarea id="admin-news-content" rows="3" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="お知らせ内容"></textarea></div>
-                    <button id="btn-add-news" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700">投稿する</button>
+        </div>
+
+        <!-- ==================== 4. 管理者ダッシュボード画面 ==================== -->
+        <div id="admin-view" class="hidden space-y-8 fade-in">
+            <!-- タブ切り替えバー -->
+            <div class="flex border-b border-slate-200 overflow-x-auto gap-2">
+                <button onclick="switchAdminTab('items')" class="admin-tab-btn px-4 py-2 text-sm font-bold border-b-2 border-indigo-600 text-indigo-600 shrink-0">📢 お知らせ・グッズ</button>
+                <button onclick="switchAdminTab('chars')" class="admin-tab-btn px-4 py-2 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-indigo-600 shrink-0">🌟 キャラクター編集</button>
+                <button onclick="switchAdminTab('pages')" class="admin-tab-btn px-4 py-2 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-indigo-600 shrink-0">📄 ページ追加・管理</button>
+                <button onclick="switchAdminTab('logs')" class="admin-tab-btn px-4 py-2 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-indigo-600 shrink-0">👀 閲覧者ログ（アクセス解析）</button>
+            </div>
+
+            <!-- タブ①：お知らせ＆グッズ管理 -->
+            <div id="admin-tab-items" class="admin-tab-content grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white border p-6 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">📢 お知らせの投稿</h3>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">投稿日</label><input type="date" id="admin-news-date" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">バッジ (例: 重要, NEWS)</label><input type="text" id="admin-news-tag" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="重要"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">本文</label><textarea id="admin-news-content" rows="3" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="お知らせの内容を入力"></textarea></div>
+                    <button id="btn-add-news" class="w-full py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors">投稿する</button>
                 </div>
-                <!-- グッズ追加 -->
-                <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-3">
-                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-2">🛍 グッズの新規登録</h3>
-                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">グッズ名</label><input type="text" id="admin-goods-name" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="限定Tシャツ"></div>
+                <div class="bg-white border p-6 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">🛍 グッズの新規登録</h3>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">グッズ名</label><input type="text" id="admin-goods-name" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"></div>
                     <div class="grid grid-cols-2 gap-2">
-                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">価格 (円)</label><input type="number" id="admin-goods-price" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="3000"></div>
-                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">絵文字</label>
-                            <select id="admin-goods-emoji" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
-                                <option value="👕">👕 Tシャツ</option><option value="🧢">🧢 帽子</option><option value="🔑">🔑 キーホルダー</option><option value="☕">☕ マグカップ</option>
-                            </select>
-                        </div>
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">価格 (円)</label><input type="number" id="admin-goods-price" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"></div>
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">絵文字アイコン</label><select id="admin-goods-emoji" class="w-full px-3 py-2 border rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"><option value="👕">👕 Tシャツ</option><option value="🧢">🧢 帽子</option><option value="🔑">🔑 キーホルダー</option><option value="☕">☕ マグカップ</option></select></div>
                     </div>
-                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">説明文</label><textarea id="admin-goods-desc" rows="2" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="グッズの説明"></textarea></div>
-                    <button id="btn-add-goods" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700">商品を登録する</button>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">説明文</label><textarea id="admin-goods-desc" rows="2" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="商品の特徴を短く入力"></textarea></div>
+                    <button id="btn-add-goods" class="w-full py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors">商品を登録する</button>
                 </div>
-                <!-- リスト管理 -->
-                <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-4">
-                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-2">📋 現在の登録情報 (削除)</h3>
-                    <div class="space-y-4 overflow-y-auto max-h-[300px]">
-                        <div><h4 class="text-xs font-bold text-slate-400 mb-2">📢 お知らせ一覧</h4><div id="admin-news-list" class="space-y-2"></div></div>
-                        <div><h4 class="text-xs font-bold text-slate-400 mb-2">🛍 グッズ一覧</h4><div id="admin-goods-list" class="space-y-2"></div></div>
+                <div class="bg-white border p-6 rounded-2xl space-y-4 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">📋 登録データ一覧 (削除)</h3>
+                    <div class="space-y-4 overflow-y-auto max-h-[350px] text-xs">
+                        <div><h4 class="font-bold text-slate-400 mb-1">📢 お知らせリスト</h4><div id="admin-news-list" class="space-y-1"></div></div>
+                        <div><h4 class="font-bold text-slate-400 mb-1">🛍 グッズリスト</h4><div id="admin-goods-list" class="space-y-1"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="admin-tab-chars" class="admin-tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white border p-6 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">🌟 キャラクターの追加 / 編集</h3>
+                    <input type="hidden" id="admin-char-id">
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">キャラクター名</label><input type="text" id="admin-char-name" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="フォックスくん"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">絵文字アイコン</label><input type="text" id="admin-char-emoji" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="🦊"></div>
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">属性・タグ</label><input type="text" id="admin-char-tag" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="リーダー / ほのお"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">パワー (1〜5)</label><input type="number" min="1" max="5" id="admin-char-power" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="5"></div>
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">スピード (1〜5)</label><input type="number" min="1" max="5" id="admin-char-speed" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="4"></div>
+                    </div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">得意なこと</label><input type="text" id="admin-char-skill" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="かけっこ、料理"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">キャラクター紹介文</label><textarea id="admin-char-desc" rows="3" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="詳細なプロフィール文章"></textarea></div>
+                    <div class="flex gap-2">
+                        <button id="btn-save-char" class="flex-grow py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors">保存する</button>
+                        <button id="btn-clear-char-form" class="px-3 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm hover:bg-slate-200 transition-colors">クリア</button>
+                    </div>
+                </div>
+                <div class="bg-white border p-6 rounded-2xl lg:col-span-2 space-y-4 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">📋 現在の登録キャラクター</h3>
+                    <div id="admin-chars-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto max-h-[450px]"></div>
+                </div>
+            </div>
+
+            <div id="admin-tab-pages" class="admin-tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white border p-6 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">📄 新しいページの作成</h3>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ページ名 (メニュー表示タイトル)</label><input type="text" id="admin-page-title" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="ファンクラブについて"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">本文テキスト</label><textarea id="admin-page-content" rows="8" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="ページの文章を入力。自動的に改行されます。"></textarea></div>
+                    <button id="btn-add-page" class="w-full py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors">新しいページを公開する</button>
+                </div>
+                <div class="bg-white border p-6 rounded-2xl lg:col-span-2 space-y-4 shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-2">📋 公開中のカスタムページ</h3>
+                    <div id="admin-pages-list" class="space-y-2 overflow-y-auto max-h-[400px]"></div>
+                </div>
+            </div>
+
+            <div id="admin-tab-logs" class="admin-tab-content hidden space-y-4">
+                <div class="bg-white border p-6 rounded-2xl shadow-sm">
+                    <h3 class="font-bold text-base text-slate-900 border-b pb-3 mb-4 flex items-center justify-between">
+                        <span>👀 閲覧者のリアルタイムアクセスログ</span>
+                        <button id="btn-clear-logs" class="text-xs px-2.5 py-1.5 bg-rose-50 text-rose-600 rounded border border-rose-100 hover:bg-rose-600 hover:text-white transition-all">ログ履歴をすべて削除</button>
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-4">ユーザーがサイトを訪問した際の「日時」「見たページ」「使用ブラウザ情報」をリアルタイムで追跡しています。</p>
+                    <div class="overflow-x-auto border border-slate-100 rounded-xl">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b text-slate-600 font-semibold">
+                                    <th class="p-3">アクセス時間</th>
+                                    <th class="p-3">閲覧されたページ</th>
+                                    <th class="p-3">ブラウザ・端末 (UserAgent)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-logs-tbody" class="divide-y divide-slate-100 text-slate-600">
+                                <tr><td colspan="3" class="p-4 text-center text-slate-400">データ読込中...</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- ログインモーダル -->
-    <div id="login-modal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative space-y-4">
-            <button id="btn-close-login" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <footer class="bg-slate-900 text-slate-400 text-center py-6 px-4 border-t border-slate-800 text-xs mt-12 shrink-0">
+        <p class="mb-2">© 2026 MY OFFICIAL SITE. All Rights Reserved.</p>
+        <p class="text-slate-600">Secure Database Synced Website with Firebase SDK 10.8.0</p>
+    </footer>
+
+    <div id="login-modal" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative shadow-2xl space-y-4 border border-slate-100">
+            <button id="btn-close-login" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="text-center space-y-1">
                 <h3 class="font-bold text-lg text-slate-900">管理者本番ログイン</h3>
-                <p class="text-xs text-amber-600 bg-amber-50 py-2 rounded px-2">⚠️ FirebaseのAuthenticationで作成した本物のメールとパスワードを入力してください。</p>
+                <p class="text-xs text-amber-600 bg-amber-50 py-2 rounded-lg px-3 leading-relaxed">⚠️ FirebaseのAuthenticationで設定した本物の管理者用メールアドレス・パスワードを入力してください。</p>
             </div>
             <div class="space-y-3">
-                <div><label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス</label><input type="email" id="login-email" class="w-full px-3 py-2 border rounded-lg text-sm"></div>
-                <div><label class="block text-xs font-semibold text-slate-600 mb-1">パスワード</label><input type="password" id="login-password" class="w-full px-3 py-2 border rounded-lg text-sm"></div>
-                <button id="btn-submit-login" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700">ログインする</button>
+                <div><label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス</label><input type="email" id="login-email" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-500"></div>
+                <div><label class="block text-xs font-semibold text-slate-600 mb-1">パスワード</label><input type="password" id="login-password" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-500"></div>
+                <button id="btn-submit-login" class="w-full py-2.5 bg-indigo-600 text-white font-bold rounded-lg text-sm hover:bg-indigo-700 transition-colors shadow-md">ログインする</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- データベース未初期化エラー警告モーダル (新追加) -->
+    <div id="error-setup-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 relative shadow-2xl border border-rose-100 space-y-5">
+            <div class="text-center space-y-2">
+                <div class="w-16 h-16 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto text-2xl font-bold animate-bounce">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="font-bold text-xl text-slate-900">Firebaseデータベースの有効化が必要です</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    プログラムは正常に連動していますが、お使いのFirebaseプロジェクトで<b>「Cloud Firestore データベース」</b>のセットアップが完了していません。
+                </p>
+            </div>
+            
+            <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-xs space-y-3 text-slate-600">
+                <p class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-circle-play text-indigo-500 mr-1"></i> 解消のための3ステップ設定手順</p>
+                <ol class="list-decimal list-inside space-y-2 leading-relaxed">
+                    <li><a href="https://console.firebase.google.com/" target="_blank" class="text-indigo-600 font-semibold underline">Firebase Console</a> を開きます。</li>
+                    <li>作成したプロジェクト（<b>my-shop-com</b>）を選択します。</li>
+                    <li>左メニューの <b>「構築（Build）」</b> ➔ <b>「Firestore Database」</b> をクリックします。</li>
+                    <li>画面中央の <b>「データベースを作成」</b> ボタンを押します。</li>
+                    <li>位置を「asia-northeast1（東京）」にし、セキュリティルールを一時的に<b>「テストモードで開始」</b>に設定して作成（有効化）します。</li>
+                </ol>
+            </div>
+
+            <p class="text-rose-600 font-mono text-[10px] bg-rose-50 p-3 rounded-lg select-all border border-rose-100">
+                エラー詳細: [code=permission-denied] Firestore API has not been enabled or used yet.
+            </p>
+
+            <div class="flex justify-center">
+                <a href="https://console.firebase.google.com/" target="_blank" class="px-6 py-2.5 bg-indigo-600 text-white font-bold text-sm rounded-xl shadow-md hover:bg-indigo-700 transition-colors">
+                    <i class="fa-solid fa-external-link mr-1"></i> Firebaseコンソールを開く
+                </a>
             </div>
         </div>
     </div>
 
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
 
-    <!-- ==================== FIREBASE LOGIC ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // あなた専用の設定
+        // あなた専用のFirebase連携キーをプリセット済み
         const firebaseConfig = {
             apiKey: "AIzaSyDcu0SS2Rp1veiNPV14onEIu-PhKdoCwYw",
             authDomain: "my-shop-com.firebaseapp.com",
@@ -291,91 +352,299 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let appData = { news: [], goods: [] };
+        let appData = { news: [], goods: [], characters: [], pages: [], logs: [] };
 
-        // グローバル関数定義 (ページ遷移やお問い合せ送信用)
-        window.switchPage = function(pageId) {
+        // セキュリティ対策：不正なHTMLコード入力を無害化するサニタイズ処理
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;')
+                      .replace(/"/g, '&quot;')
+                      .replace(/'/g, '&#39;');
+        }
+
+        // アクセスログ自動収集ロジック
+        async function recordAccessLog(pageName) {
+            try {
+                await addDoc(collection(db, "access_logs"), {
+                    page: pageName,
+                    time: new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }),
+                    timestamp: serverTimestamp(),
+                    userAgent: navigator.userAgent
+                });
+            } catch (e) { console.error("ログ収集エラー:", e); }
+        }
+
+        // ページ切り替えメイン制御
+        window.switchPage = function(pageId, isCustom = false) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
             document.getElementById('admin-view').classList.add('hidden');
             
-            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+            if (isCustom) {
+                const targetPage = appData.pages.find(p => p.fsId === pageId);
+                if (targetPage) {
+                    document.getElementById("dynamic-view-title").innerText = targetPage.title;
+                    document.getElementById("dynamic-view-content").innerText = targetPage.content;
+                    document.getElementById("dynamic-page-viewer").classList.remove('hidden');
+                    document.getElementById("hero-title").innerText = targetPage.title;
+                    document.getElementById("hero-desc").innerText = "新しく作成された特設カスタムページです。";
+                    recordAccessLog(`カスタムページ: ${targetPage.title}`);
+                }
+            } else {
+                const element = document.getElementById(`page-${pageId}`);
+                if(element) element.classList.remove('hidden');
+                
+                if (pageId === 'home') {
+                    document.getElementById("hero-title").innerText = "オフィシャルWEBサイト";
+                    document.getElementById("hero-desc").innerText = "最新情報、オリジナルグッズ、キャラクター紹介ページへようこそ！";
+                } else if (pageId === 'characters') {
+                    document.getElementById("hero-title").innerText = "キャラクター図鑑";
+                    document.getElementById("hero-desc").innerText = "作品を彩る個性豊かなキャラクターたちの最新ステータス一覧です。";
+                } else if (pageId === 'contact') {
+                    document.getElementById("hero-title").innerText = "お問い合わせ窓口";
+                    document.getElementById("hero-desc").innerText = "運営へのメッセージやご意見を受け付けております。";
+                }
+                recordAccessLog(pageId);
+            }
             document.getElementById('hero-section').classList.remove('hidden');
-            
             document.getElementById("nav-admin-btn").classList.toggle("hidden", !auth.currentUser);
             document.getElementById("nav-view-btn").classList.add("hidden");
             document.getElementById("user-nav-links").classList.remove("hidden");
             document.getElementById("mobile-nav-links").classList.remove("hidden");
         }
 
+        // 管理画面タブ切り替え
+        window.switchAdminTab = function(tabId) {
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(b => {
+                b.classList.remove('text-indigo-600', 'border-indigo-600', 'font-bold');
+                b.classList.add('text-slate-500', 'border-transparent', 'font-medium');
+            });
+            document.getElementById(`admin-tab-${tabId}`).classList.remove('hidden');
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('text-indigo-600', 'border-indigo-600', 'font-bold');
+                event.currentTarget.classList.remove('text-slate-500', 'border-transparent', 'font-medium');
+            }
+        }
+
+        // お問い合わせデモ送信
         window.handleContactSubmit = function(event) {
             event.preventDefault();
-            const name = document.getElementById("contact-name").value;
-            showToast(`📬 ${name}様、お問い合わせを送信しました！（デモ動作）`);
+            const safeName = escapeHtml(document.getElementById("contact-name").value);
+            showToast(`📬 ${safeName}様、お問い合わせを受信（シミュレート）しました！`);
             document.getElementById("contact-form").reset();
         }
 
         function showToast(message, type = "success") {
             const container = document.getElementById("toast-container");
             const toast = document.createElement("div");
-            toast.className = `px-4 py-3 rounded-xl border text-sm shadow-xl transition-all ${type === "error" ? "bg-rose-50 border-rose-100 text-rose-800" : "bg-emerald-50 border-emerald-100 text-emerald-800"}`;
+            toast.className = `px-4 py-3 rounded-xl border text-sm font-semibold shadow-xl transition-all ${type === "error" ? "bg-rose-50 border-rose-100 text-rose-800" : "bg-emerald-50 border-emerald-100 text-emerald-800"}`;
             toast.innerHTML = message;
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 5000);
+            setTimeout(() => toast.remove(), 4000);
         }
 
-        async function fetchFirebaseData() {
+        // 全データベース情報の同期・取得
+        async function fetchAllFirebaseData() {
             try {
-                const newsSnapshot = await getDocs(collection(db, "news"));
-                appData.news = [];
-                newsSnapshot.forEach(doc => appData.news.push({ ...doc.data(), fsId: doc.id }));
+                const newsSnap = await getDocs(collection(db, "news"));
+                appData.news = []; newsSnap.forEach(d => appData.news.push({ ...d.data(), fsId: d.id }));
 
-                const goodsSnapshot = await getDocs(collection(db, "goods"));
-                appData.goods = [];
-                goodsSnapshot.forEach(doc => appData.goods.push({ ...doc.data(), fsId: doc.id }));
+                const goodsSnap = await getDocs(collection(db, "goods"));
+                appData.goods = []; goodsSnap.forEach(d => appData.goods.push({ ...d.data(), fsId: d.id }));
+
+                const charSnap = await getDocs(collection(db, "custom_characters"));
+                appData.characters = []; charSnap.forEach(d => appData.characters.push({ ...d.data(), fsId: d.id }));
+
+                const pageSnap = await getDocs(collection(db, "custom_pages"));
+                appData.pages = []; pageSnap.forEach(d => appData.pages.push({ ...d.data(), fsId: d.id }));
+
+                const logSnap = await getDocs(collection(db, "access_logs"));
+                appData.logs = []; logSnap.forEach(d => appData.logs.push({ ...d.data(), fsId: d.id }));
 
                 renderUI();
             } catch (err) {
-                showToast("データ読み込み失敗: " + err.message, "error");
+                console.error("Firestore接続エラー:", err);
+                // データベースが未有効化の場合、専用のエラーモーダルを表示
+                if (err.message && (err.message.includes("API") || err.message.includes("permission-denied") || err.message.includes("Firestore API"))) {
+                    document.getElementById("error-setup-modal").classList.remove("hidden");
+                } else {
+                    showToast("データ同期失敗: " + err.message, "error");
+                }
             }
         }
 
+        // 画面へのHTMLレンダリング（XSS徹底防御版）
         function renderUI() {
+            // 1. お知らせ
             const newsContainer = document.getElementById("news-list-container");
-            const goodsGrid = document.getElementById("goods-grid");
-            const adminNewsList = document.getElementById("admin-news-list");
-            const adminGoodsList = document.getElementById("admin-goods-list");
-
-            newsContainer.innerHTML = appData.news.length === 0 ? '<p class="text-sm text-slate-400">お知らせはありません。</p>' : '';
+            newsContainer.innerHTML = appData.news.length === 0 ? '<p class="text-sm text-slate-400 text-center py-4">現在お知らせはありません。</p>' : '';
             appData.news.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(item => {
-                newsContainer.innerHTML += `<div class="bg-white border p-5 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center gap-4"><div class="flex items-center gap-2 shrink-0"><span class="text-xs font-bold text-slate-400">${item.date}</span>${item.tag ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">${item.tag}</span>`:''}</div><div class="text-slate-700 text-sm">${item.content}</div></div>`;
+                newsContainer.innerHTML += `<div class="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm text-sm flex flex-col md:flex-row md:items-center gap-3"><div><span class="text-xs font-bold text-slate-400 mr-2">${escapeHtml(item.date)}</span>${item.tag ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">${escapeHtml(item.tag)}</span>`:''}</div><div class="text-slate-700">${escapeHtml(item.content)}</div></div>`;
             });
 
-            goodsGrid.innerHTML = appData.goods.length === 0 ? '<p class="text-sm text-slate-400">登録されたグッズはありません。</p>' : '';
+            // 2. グッズ
+            const goodsGrid = document.getElementById("goods-grid");
+            goodsGrid.innerHTML = appData.goods.length === 0 ? '<p class="text-sm text-slate-400 col-span-full text-center py-4">登録されたグッズはまだありません。</p>' : '';
             appData.goods.forEach(item => {
-                goodsGrid.innerHTML += `<div class="bg-white border rounded-2xl overflow-hidden shadow-sm flex flex-col"><div class="bg-slate-50 py-10 flex items-center justify-center text-5xl"><span>${item.emoji || '👕'}</span></div><div class="p-4 flex-grow flex flex-col justify-between space-y-2"><div><h3 class="font-bold text-slate-800 text-sm">${item.name}</h3><p class="text-xs text-slate-400">${item.desc || ''}</p></div><div class="flex items-center justify-between border-t pt-2 mt-2"><span class="font-bold text-sm">¥${item.price.toLocaleString()}</span><button class="px-3 py-1 rounded bg-indigo-600 text-white text-xs">購入</button></div></div></div>`;
+                goodsGrid.innerHTML += `<div class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col"><div class="bg-slate-50 py-8 flex items-center justify-center text-4xl"><span>${escapeHtml(item.emoji)}</span></div><div class="p-4 flex-grow flex flex-col justify-between"><div><h3 class="font-bold text-slate-800 text-sm">${escapeHtml(item.name)}</h3><p class="text-xs text-slate-400 mt-1">${escapeHtml(item.desc || '')}</p></div><div class="flex items-center justify-between border-t pt-2 mt-3"><span class="font-bold text-sm text-slate-900">¥${parseInt(item.price || 0).toLocaleString()}</span><button class="px-3 py-1 rounded bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors">購入</button></div></div></div>`;
             });
 
-            adminNewsList.innerHTML = '';
-            appData.news.forEach(item => {
-                adminNewsList.innerHTML += `<div class="flex items-center justify-between bg-slate-50 p-2 rounded border text-xs"><span>${item.date} ${item.content}</span><button onclick="window.deleteNews('${item.fsId}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></div>`;
+            // 3. キャラクター表示 (カード & 能力表)
+            const charGrid = document.getElementById("characters-grid");
+            const charTable = document.getElementById("characters-table-body");
+            charGrid.innerHTML = appData.characters.length === 0 ? '<p class="text-sm text-slate-400 col-span-full text-center py-4">キャラクターデータが登録されていません。</p>' : '';
+            charTable.innerHTML = appData.characters.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400 text-xs">データがありません。</td></tr>' : '';
+
+            appData.characters.forEach(c => {
+                charGrid.innerHTML += `<div class="bg-white border border-slate-100 rounded-2xl p-5 text-center space-y-3 shadow-sm relative hover:shadow-md transition-shadow"><div class="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-4xl mx-auto border border-indigo-100">${escapeHtml(c.emoji)}</div><div><h3 class="font-bold text-base text-slate-800">${escapeHtml(c.name)}</h3><p class="text-xs text-indigo-600 font-bold mt-0.5">${escapeHtml(c.tag)}</p></div><p class="text-xs text-slate-500 leading-relaxed">${escapeHtml(c.desc)}</p></div>`;
+                
+                const pStars = "⭐".repeat(Math.min(Math.max(parseInt(c.power) || 1, 1), 5));
+                const sStars = "⭐".repeat(Math.min(Math.max(parseInt(c.speed) || 1, 1), 5));
+                charTable.innerHTML += `<tr class="hover:bg-slate-50/50"><td class="p-4 font-bold flex items-center gap-2 text-slate-800"><span>${escapeHtml(c.emoji)}</span> ${escapeHtml(c.name)}</td><td class="p-4"><span class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold">${escapeHtml(c.tag)}</span></td><td class="p-4 text-xs">${escapeHtml(c.skill)}</td><td class="p-4 text-center text-xs text-indigo-600 whitespace-nowrap">${pStars}</td><td class="p-4 text-center text-xs text-indigo-600 whitespace-nowrap">${sStars}</td></tr>`;
             });
 
-            adminGoodsList.innerHTML = '';
-            appData.goods.forEach(item => {
-                adminGoodsList.innerHTML += `<div class="flex items-center justify-between bg-slate-50 p-2 rounded border text-xs"><span>${item.name}</span><button onclick="window.deleteGoods('${item.fsId}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></div>`;
+            // 4. 動的カスタムページメニューリンク生成
+            const dynNav = document.getElementById("dynamic-nav-links");
+            const dynMobile = document.getElementById("dynamic-mobile-links");
+            dynNav.innerHTML = ""; dynMobile.innerHTML = "";
+            appData.pages.forEach(p => {
+                dynNav.innerHTML += `<button onclick="switchPage('${p.fsId}', true)" class="hover:text-indigo-600 transition-colors">${escapeHtml(p.title)}</button>`;
+                dynMobile.innerHTML += `<button onclick="switchPage('${p.fsId}', true)" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600 text-slate-600 shrink-0"><i class="fa-solid fa-file-invoice"></i><span>${escapeHtml(p.title)}</span></button>`;
+            });
+
+            // 5. 管理画面側のデータ一覧レンダリング
+            document.getElementById("admin-news-list").innerHTML = "";
+            appData.news.forEach(i => { document.getElementById("admin-news-list").innerHTML += `<div class="flex justify-between bg-slate-50 p-2 rounded border border-slate-100 items-center"><span>[${escapeHtml(i.date)}] ${escapeHtml(i.content)}</span><button onclick="window.deleteItem('news','${i.fsId}')" class="text-rose-500 hover:text-rose-700 ml-2"><i class="fa-solid fa-trash"></i></button></div>` });
+            
+            document.getElementById("admin-goods-list").innerHTML = "";
+            appData.goods.forEach(i => { document.getElementById("admin-goods-list").innerHTML += `<div class="flex justify-between bg-slate-50 p-2 rounded border border-slate-100 items-center"><span>${escapeHtml(i.name)}</span><button onclick="window.deleteItem('goods','${i.fsId}')" class="text-rose-500 hover:text-rose-700 ml-2"><i class="fa-solid fa-trash"></i></button></div>` });
+
+            document.getElementById("admin-chars-list").innerHTML = "";
+            appData.characters.forEach(c => {
+                document.getElementById("admin-chars-list").innerHTML += `<div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs"><div class="flex items-center gap-2"><span class="text-2xl">${escapeHtml(c.emoji)}</span><div><p class="font-bold text-slate-800">${escapeHtml(c.name)}</p><p class="text-[10px] text-slate-400">${escapeHtml(c.tag)}</p></div></div><div class="flex gap-3"><button onclick="window.loadCharToForm('${c.fsId}')" class="text-indigo-600 font-bold hover:underline">編集</button><button onclick="window.deleteItem('custom_characters','${c.fsId}')" class="text-rose-500 hover:text-rose-700"><i class="fa-solid fa-trash"></i></button></div></div>`;
+            });
+
+            document.getElementById("admin-pages-list").innerHTML = "";
+            appData.pages.forEach(p => {
+                document.getElementById("admin-pages-list").innerHTML += `<div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs"><div><span class="font-bold text-slate-800 text-sm">${escapeHtml(p.title)}</span></div><button onclick="window.deleteItem('custom_pages','${p.fsId}')" class="text-rose-500 font-bold hover:text-rose-700"><i class="fa-solid fa-trash"></i> 削除</button></div>`;
+            });
+
+            // 6. アクセスログ
+            const logsTbody = document.getElementById("admin-logs-tbody");
+            logsTbody.innerHTML = appData.logs.length === 0 ? '<tr><td colspan="3" class="p-4 text-center text-slate-400">ログはまだありません。</td></tr>' : '';
+            appData.logs.sort((a,b) => b.time.localeCompare(a.time)).forEach(l => {
+                logsTbody.innerHTML += `<tr class="hover:bg-slate-50 text-slate-600"><td class="p-3 font-semibold text-slate-900 whitespace-nowrap">${escapeHtml(l.time)}</td><td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold">${escapeHtml(l.page)}</span></td><td class="p-3 text-slate-400 max-w-xs truncate" title="${escapeHtml(l.userAgent)}">${escapeHtml(l.userAgent)}</td></tr>`;
             });
         }
 
+        // キャラクター編集用フォームへのデータ展開
+        window.loadCharToForm = function(fsId) {
+            const c = appData.characters.find(char => char.fsId === fsId);
+            if(c) {
+                document.getElementById("admin-char-id").value = c.fsId;
+                document.getElementById("admin-char-name").value = c.name;
+                document.getElementById("admin-char-emoji").value = c.emoji;
+                document.getElementById("admin-char-tag").value = c.tag;
+                document.getElementById("admin-char-power").value = c.power;
+                document.getElementById("admin-char-speed").value = c.speed;
+                document.getElementById("admin-char-skill").value = c.skill;
+                document.getElementById("admin-char-desc").value = c.desc;
+                showToast("キャラ情報をフォームに読み込みました！");
+                switchAdminTab('chars');
+            }
+        }
+
+        // キャラクター追加・編集のセーブ処理
+        document.getElementById("btn-save-char").addEventListener("click", async () => {
+            const fsId = document.getElementById("admin-char-id").value;
+            const name = document.getElementById("admin-char-name").value.trim();
+            if(!name) return showToast("名前を入力してください", "error");
+
+            const charData = {
+                name: name,
+                emoji: document.getElementById("admin-char-emoji").value.trim() || "🦊",
+                tag: document.getElementById("admin-char-tag").value.trim() || "ノーマル",
+                power: parseInt(document.getElementById("admin-char-power").value) || 3,
+                speed: parseInt(document.getElementById("admin-char-speed").value) || 3,
+                skill: document.getElementById("admin-char-skill").value.trim() || "特になし",
+                desc: document.getElementById("admin-char-desc").value.trim() || ""
+            };
+
+            try {
+                if(fsId) {
+                    await setDoc(doc(db, "custom_characters", fsId), charData);
+                    showToast("キャラクター情報を更新完了！");
+                } else {
+                    await addDoc(collection(db, "custom_characters"), charData);
+                    showToast("新しいキャラクターを追加登録しました！");
+                }
+                clearCharForm(); fetchAllFirebaseData();
+            } catch (e) { showToast("保存失敗: " + e.message, "error"); }
+        });
+
+        function clearCharForm() {
+            document.getElementById("admin-char-id").value = "";
+            document.getElementById("admin-char-name").value = "";
+            document.getElementById("admin-char-emoji").value = "";
+            document.getElementById("admin-char-tag").value = "";
+            document.getElementById("admin-char-power").value = "";
+            document.getElementById("admin-char-speed").value = "";
+            document.getElementById("admin-char-skill").value = "";
+            document.getElementById("admin-char-desc").value = "";
+        }
+        document.getElementById("btn-clear-char-form").addEventListener("click", clearCharForm);
+
+        // カスタムページ作成
+        document.getElementById("btn-add-page").addEventListener("click", async () => {
+            const title = document.getElementById("admin-page-title").value.trim();
+            const content = document.getElementById("admin-page-content").value.trim();
+            if(!title || !content) return showToast("タイトルと本文を入力してください", "error");
+
+            try {
+                await addDoc(collection(db, "custom_pages"), { title, content });
+                document.getElementById("admin-page-title").value = "";
+                document.getElementById("admin-page-content").value = "";
+                showToast(`特設ページ「${title}」を正常に公開しました！`);
+                fetchAllFirebaseData();
+            } catch(e) { showToast("公開エラー: " + e.message, "error"); }
+        });
+
+        // 共通削除用ファンクション
+        window.deleteItem = async (colName, fsId) => {
+            if(confirm("データを完全に削除します。よろしいですか？")) {
+                try {
+                    await deleteDoc(doc(db, colName, fsId));
+                    showToast("削除が完了しました");
+                    fetchAllFirebaseData();
+                } catch(e) { showToast("削除失敗: " + e.message, "error"); }
+            }
+        };
+
+        // ログ一括クリーンアップ
+        document.getElementById("btn-clear-logs").addEventListener("click", async () => {
+            if(confirm("すべてのアクセスログデータを初期化消去しますか？")) {
+                try {
+                    const snaps = await getDocs(collection(db, "access_logs"));
+                    for (const d of snaps.docs) {
+                        await deleteDoc(doc(db, "access_logs", d.id));
+                    }
+                    showToast("ログ履歴をすべて削除しました。");
+                    fetchAllFirebaseData();
+                } catch(e) { showToast("クリーンアップ失敗", "error"); }
+            }
+        });
+
+        // Firebase ログイン & ログアウト & 監視
         document.getElementById("btn-submit-login").addEventListener("click", async () => {
             const email = document.getElementById("login-email").value.trim();
             const password = document.getElementById("login-password").value;
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                showToast("管理者ログイン成功！");
+                showToast("本番環境ログインに成功しました！");
                 document.getElementById("login-modal").classList.add("hidden");
-            } catch (err) {
-                showToast("ログイン失敗: " + err.message, "error");
-            }
+            } catch (err) { showToast("認証エラー: " + err.message, "error"); }
         });
 
         onAuthStateChanged(auth, (user) => {
@@ -388,21 +657,20 @@
             } else {
                 switchPage('home');
             }
-            fetchFirebaseData();
+            fetchAllFirebaseData();
         });
 
         document.getElementById("nav-logout-btn").addEventListener("click", () => signOut(auth));
 
+        // お知らせ・グッズの追加
         document.getElementById("btn-add-news").addEventListener("click", async () => {
             const date = document.getElementById("admin-news-date").value || new Date().toISOString().split('T')[0];
             const tag = document.getElementById("admin-news-tag").value.trim();
             const content = document.getElementById("admin-news-content").value.trim();
             if(!content) return showToast("本文を入力してください", "error");
-            
             await addDoc(collection(db, "news"), { date, tag, content });
             document.getElementById("admin-news-content").value = "";
-            showToast("おしらせを投稿しました！");
-            fetchFirebaseData();
+            showToast("お知らせを書き込みました！"); fetchAllFirebaseData();
         });
 
         document.getElementById("btn-add-goods").addEventListener("click", async () => {
@@ -410,33 +678,23 @@
             const price = parseInt(document.getElementById("admin-goods-price").value);
             const emoji = document.getElementById("admin-goods-emoji").value;
             const desc = document.getElementById("admin-goods-desc").value.trim();
-            if(!name || isNaN(price)) return showToast("正しい商品名と価格を入力してください", "error");
-
+            if(!name || isNaN(price)) return showToast("商品名と価格を正しく入力してください", "error");
             await addDoc(collection(db, "goods"), { name, price, emoji, desc });
             document.getElementById("admin-goods-name").value = "";
             document.getElementById("admin-goods-price").value = "";
             document.getElementById("admin-goods-desc").value = "";
-            showToast("グッズを登録しました！");
-            fetchFirebaseData();
+            showToast("新商品をストアへ登録しました！"); fetchAllFirebaseData();
         });
-
-        window.deleteNews = async (fsId) => { if(confirm("削除しますか？")) { await deleteDoc(doc(db, "news", fsId)); fetchFirebaseData(); } };
-        window.deleteGoods = async (fsId) => { if(confirm("削除しますか？")) { await deleteDoc(doc(db, "goods", fsId)); fetchFirebaseData(); } };
 
         function toggleViews(showAdmin) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
             document.getElementById("admin-view").classList.toggle("hidden", !showAdmin);
-            
             document.getElementById("nav-admin-btn").classList.toggle("hidden", showAdmin || !auth.currentUser);
             document.getElementById("nav-view-btn").classList.toggle("hidden", !showAdmin);
             document.getElementById("hero-section").classList.toggle("hidden", showAdmin);
-            
             document.getElementById("user-nav-links").classList.toggle("hidden", showAdmin);
             document.getElementById("mobile-nav-links").classList.toggle("hidden", showAdmin);
-            
-            if(!showAdmin) {
-                document.getElementById('page-home').classList.remove('hidden');
-            }
+            if(!showAdmin) document.getElementById('page-home').classList.remove('hidden');
         }
 
         document.getElementById("nav-login-btn").addEventListener("click", () => document.getElementById("login-modal").classList.remove("hidden"));
