@@ -1207,4 +1207,71 @@
 
     </script>
 </body>
+// 【修正版】① お知らせ投稿処理
+        document.getElementById("btn-add-news").addEventListener("click", async () => {
+            const date = document.getElementById("admin-news-date").value;
+            const tag = document.getElementById("admin-news-tag").value || "NEWS";
+            const content = document.getElementById("admin-news-content").value;
+
+            if (!date || !content) {
+                showToast("日付と本文を入力してください", "error");
+                return;
+            }
+
+            try {
+                // Firestoreへ追加
+                await addDoc(collection(db, "news"), { 
+                    date: date, 
+                    tag: tag, 
+                    content: content, 
+                    timestamp: serverTimestamp() 
+                });
+                
+                showToast("📢 お知らせを投稿しました");
+                
+                // フォームをクリア
+                document.getElementById("admin-news-content").value = "";
+                
+                // ★データを再取得して画面を強制リフレッシュ
+                await loadAllData(); 
+                
+            } catch (e) { 
+                handleFirestoreError(e); 
+            }
+        });
+        // 【修正版】② グッズ新規登録処理
+        document.getElementById("btn-add-goods").addEventListener("click", async () => {
+            const name = document.getElementById("admin-goods-name").value;
+            const price = document.getElementById("admin-goods-price").value;
+            const emoji = document.getElementById("admin-goods-emoji").value;
+            const desc = document.getElementById("admin-goods-desc").value;
+
+            if (!name || !price || !desc) {
+                showToast("未入力の項目があります", "error");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "goods"), { 
+                    name: name, 
+                    price: Number(price), // 確実に数値に変換
+                    emoji: emoji, 
+                    desc: desc, 
+                    timestamp: serverTimestamp() 
+                });
+                
+                showToast("🛍 グッズを新規登録しました");
+                
+                // 入力欄のリセット
+                document.getElementById("admin-goods-name").value = "";
+                document.getElementById("admin-goods-price").value = "";
+                document.getElementById("admin-goods-desc").value = "";
+                
+                // ★データを再取得して画面を強制リフレッシュ
+                await loadAllData();
+                
+            } catch (e) { 
+                handleFirestoreError(e); 
+            }
+        });
 </html>
