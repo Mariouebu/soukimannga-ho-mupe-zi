@@ -888,3 +888,451 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Website & Admin System</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+        .fade-in { animation: fadeIn 0.2s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- ヘッダー・ナビゲーション -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+            <a href="#" onclick="switchPage('home')" class="flex items-center gap-1.5 font-bold text-base md:text-xl text-indigo-600 shrink-0">
+                <i class="fa-solid fa-shop"></i>
+                <span>MY SHOP</span>
+            </a>
+            
+            <!-- ナビゲーションリンク（新追加） -->
+            <nav id="user-nav-links" class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <button onclick="switchPage('home')" class="hover:text-indigo-600 transition-colors">ホーム</button>
+                <button onclick="switchPage('characters')" class="hover:text-indigo-600 transition-colors">キャラクター</button>
+                <button onclick="switchPage('contact')" class="hover:text-indigo-600 transition-colors">お問い合わせ</button>
+            </nav>
+
+            <!-- ボタンエリア（スマホ対応・管理者用） -->
+            <div class="flex items-center gap-1.5 md:gap-3 ml-auto">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] md:text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                    本番モード
+                </span>
+                <button id="nav-login-btn" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-slate-100 text-slate-700 hover:bg-indigo-600 hover:text-white transition-all shrink-0">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>ログイン</span>
+                </button>
+                <button id="nav-logout-btn" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-all shrink-0">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>ログアウト</span>
+                </button>
+                <button id="nav-admin-btn" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-all shrink-0">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>管理画面</span>
+                </button>
+                <button id="nav-view-btn" class="hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0">
+                    <i class="fa-solid fa-eye"></i>
+                    <span>サイトを見る</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- スマホ用サブナビゲーション（新追加） -->
+        <div id="mobile-nav-links" class="md:hidden flex justify-around border-t border-slate-100 bg-white py-2 text-xs font-medium text-slate-600">
+            <button onclick="switchPage('home')" class="flex flex-col items-center gap-0.5"><i class="fa-solid fa-house"></i><span>ホーム</span></button>
+            <button onclick="switchPage('characters')" class="flex flex-col items-center gap-0.5"><i class="fa-solid fa-users"></i><span>キャラ</span></button>
+            <button onclick="switchPage('contact')" class="flex flex-col items-center gap-0.5"><i class="fa-solid fa-envelope"></i><span>お問合せ</span></button>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section id="hero-section" class="bg-gradient-to-r from-indigo-600 to-violet-700 text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <h1 class="text-2xl md:text-4xl font-extrabold">オフィシャルWEBサイト</h1>
+            <p class="text-indigo-100 text-xs md:text-sm max-w-xl mx-auto font-light">最新情報、オリジナルグッズ、キャラクター紹介ページへようこそ！</p>
+        </div>
+    </section>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+        
+        <!-- ==================== 1. ホームページ画面 ==================== -->
+        <div id="page-home" class="page-content space-y-12 fade-in">
+            <section id="news-section">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-bullhorn text-indigo-600"></i><span>📢 最新お知らせ</span>
+                </h2>
+                <div id="news-list-container" class="space-y-4"><p class="text-slate-400 text-sm">読み込み中...</p></div>
+            </section>
+            <section id="goods-section">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-indigo-600"></i><span>🛍 グッズ紹介 & 販売</span>
+                </h2>
+                <div id="goods-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"><p class="text-slate-400 text-sm">読み込み中...</p></div>
+            </section>
+        </div>
+
+        <!-- ==================== 2. キャラクター紹介ページ画面 (新追加) ==================== -->
+        <div id="page-characters" class="page-content hidden space-y-12 fade-in">
+            <section>
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-star text-indigo-600"></i><span>🌟 キャラクター紹介</span>
+                </h2>
+                <!-- キャラカードグリッド -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- キャラ1 -->
+                    <div class="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 text-center space-y-3">
+                        <div class="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center text-4xl mx-auto border-2 border-indigo-200">🦊</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">フォックスくん</h3>
+                            <p class="text-xs text-indigo-600 font-medium">頼れるリーダー</p>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">いつも元気いっぱいでみんなを引っ張る男の子。趣味は美味しい食べ歩きと新しい冒険に出かけること！</p>
+                    </div>
+                    <!-- キャラ2 -->
+                    <div class="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 text-center space-y-3">
+                        <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center text-4xl mx-auto border-2 border-emerald-200">🐰</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">ラビちゃん</h3>
+                            <p class="text-xs text-emerald-600 font-medium">ひらめき天才発明家</p>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">のんびり屋さんに見えて、実はすごいメカを作る天才。にんじんジュースを飲むと良いアイデアが浮かびます。</p>
+                    </div>
+                    <!-- キャラ3 -->
+                    <div class="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 text-center space-y-3">
+                        <div class="w-24 h-24 bg-amber-50 rounded-full flex items-center justify-center text-4xl mx-auto border-2 border-amber-200">🐻</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">ベアさん</h3>
+                            <p class="text-xs text-amber-600 font-medium">物知りでおっとり</p>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">読書が大好きで、みんなの相談にいつも優しく乗ってくれるお兄さん。お昼寝が日課でどこでも寝ちゃいます。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- キャラクター表 -->
+            <section>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-table-list text-indigo-500"></i><span>📊 キャラクター能力表</span>
+                </h3>
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs md:text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+                                    <th class="p-4">名前</th>
+                                    <th class="p-4">属性</th>
+                                    <th class="p-4">得意なこと</th>
+                                    <th class="p-4 text-center">パワー</th>
+                                    <th class="p-4 text-center">スピード</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-700">
+                                <tr>
+                                    <td class="p-4 font-bold flex items-center gap-2"><span>🦊</span> フォックスくん</td>
+                                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-red-50 text-red-700 text-[10px] font-bold">ほのお</span></td>
+                                    <td class="p-4">ダッシュ・探索</td>
+                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐</td>
+                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐⭐</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-bold flex items-center gap-2"><span>🐰</span> ラビちゃん</td>
+                                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold">かぜ</span></td>
+                                    <td class="p-4">アイテム開発・工作</td>
+                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐</td>
+                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-bold flex items-center gap-2"><span>🐻</span> ベアさん</td>
+                                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-bold">だいち</span></td>
+                                    <td class="p-4">力仕事・料理</td>
+                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐⭐⭐⭐</td>
+                                    <td class="p-4 text-center font-semibold text-indigo-600">⭐⭐</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== 3. お問い合わせページ画面 (新追加) ==================== -->
+        <div id="page-contact" class="page-content hidden max-w-xl mx-auto fade-in">
+            <div class="bg-white border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm space-y-6">
+                <div class="text-center">
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-indigo-600"></i><span>📬 お問い合わせ</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">サイトへのご意見やご質問はこちらからお送りください。</p>
+                </div>
+                
+                <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">お名前 <span class="text-rose-500">*</span></label>
+                        <input type="text" required id="contact-name" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="山田 太郎">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス <span class="text-rose-500">*</span></label>
+                        <input type="email" required id="contact-email" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">お問い合わせ内容 <span class="text-rose-500">*</span></label>
+                        <textarea required id="contact-message" rows="4" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="メッセージを入力してください"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-colors shadow-md">
+                        メッセージを送信する
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ==================== 4. 管理者画面 (ADMIN VIEW) ==================== -->
+        <div id="admin-view" class="hidden space-y-8 fade-in">
+            <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-gears text-indigo-600"></i><span>🛠 管理者ダッシュボード</span></h2>
+                <p class="text-sm text-indigo-800/80 mt-1">本物のオンラインデータベース（Firebase）にデータが直接保存されます。</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- お知らせ追加 -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-3">
+                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-2">📢 お知らせの投稿</h3>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">投稿日</label><input type="date" id="admin-news-date" class="w-full px-3 py-2 border rounded-lg text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">バッジ</label><input type="text" id="admin-news-tag" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="重要"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">本文</label><textarea id="admin-news-content" rows="3" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="お知らせ内容"></textarea></div>
+                    <button id="btn-add-news" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700">投稿する</button>
+                </div>
+                <!-- グッズ追加 -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-3">
+                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-2">🛍 グッズの新規登録</h3>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">グッズ名</label><input type="text" id="admin-goods-name" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="限定Tシャツ"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">価格 (円)</label><input type="number" id="admin-goods-price" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="3000"></div>
+                        <div><label class="block text-xs font-semibold text-slate-600 mb-1">絵文字</label>
+                            <select id="admin-goods-emoji" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                                <option value="👕">👕 Tシャツ</option><option value="🧢">🧢 帽子</option><option value="🔑">🔑 キーホルダー</option><option value="☕">☕ マグカップ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">説明文</label><textarea id="admin-goods-desc" rows="2" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="グッズの説明"></textarea></div>
+                    <button id="btn-add-goods" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700">商品を登録する</button>
+                </div>
+                <!-- リスト管理 -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 border-b border-slate-100 pb-2">📋 現在の登録情報 (削除)</h3>
+                    <div class="space-y-4 overflow-y-auto max-h-[300px]">
+                        <div><h4 class="text-xs font-bold text-slate-400 mb-2">📢 お知らせ一覧</h4><div id="admin-news-list" class="space-y-2"></div></div>
+                        <div><h4 class="text-xs font-bold text-slate-400 mb-2">🛍 グッズ一覧</h4><div id="admin-goods-list" class="space-y-2"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ログインモーダル -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative space-y-4">
+            <button id="btn-close-login" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center space-y-1">
+                <h3 class="font-bold text-lg text-slate-900">管理者本番ログイン</h3>
+                <p class="text-xs text-amber-600 bg-amber-50 py-2 rounded px-2">⚠️ FirebaseのAuthenticationで作成した本物のメールとパスワードを入力してください。</p>
+            </div>
+            <div class="space-y-3">
+                <div><label class="block text-xs font-semibold text-slate-600 mb-1">メールアドレス</label><input type="email" id="login-email" class="w-full px-3 py-2 border rounded-lg text-sm"></div>
+                <div><label class="block text-xs font-semibold text-slate-600 mb-1">パスワード</label><input type="password" id="login-password" class="w-full px-3 py-2 border rounded-lg text-sm"></div>
+                <button id="btn-submit-login" class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700">ログインする</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- ==================== FIREBASE LOGIC ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // あなた専用の設定
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcu0SS2Rp1veiNPV14onEIu-PhKdoCwYw",
+            authDomain: "my-shop-com.firebaseapp.com",
+            projectId: "my-shop-com",
+            storageBucket: "my-shop-com.firebasestorage.app",
+            messagingSenderId: "594456783209",
+            appId: "1:594456783209:web:2860fe5f7bfe85b23c58b8",
+            measurementId: "G-P28P16G0K7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let appData = { news: [], goods: [] };
+
+        // グローバル関数定義 (ページ遷移やお問い合せ送信用)
+        window.switchPage = function(pageId) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById('admin-view').classList.add('hidden');
+            
+            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+            document.getElementById('hero-section').classList.remove('hidden');
+            
+            document.getElementById("nav-admin-btn").classList.toggle("hidden", !auth.currentUser);
+            document.getElementById("nav-view-btn").classList.add("hidden");
+            document.getElementById("user-nav-links").classList.remove("hidden");
+            document.getElementById("mobile-nav-links").classList.remove("hidden");
+        }
+
+        window.handleContactSubmit = function(event) {
+            event.preventDefault();
+            const name = document.getElementById("contact-name").value;
+            showToast(`📬 ${name}様、お問い合わせを送信しました！（デモ動作）`);
+            document.getElementById("contact-form").reset();
+        }
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `px-4 py-3 rounded-xl border text-sm shadow-xl transition-all ${type === "error" ? "bg-rose-50 border-rose-100 text-rose-800" : "bg-emerald-50 border-emerald-100 text-emerald-800"}`;
+            toast.innerHTML = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        async function fetchFirebaseData() {
+            try {
+                const newsSnapshot = await getDocs(collection(db, "news"));
+                appData.news = [];
+                newsSnapshot.forEach(doc => appData.news.push({ ...doc.data(), fsId: doc.id }));
+
+                const goodsSnapshot = await getDocs(collection(db, "goods"));
+                appData.goods = [];
+                goodsSnapshot.forEach(doc => appData.goods.push({ ...doc.data(), fsId: doc.id }));
+
+                renderUI();
+            } catch (err) {
+                showToast("データ読み込み失敗: " + err.message, "error");
+            }
+        }
+
+        function renderUI() {
+            const newsContainer = document.getElementById("news-list-container");
+            const goodsGrid = document.getElementById("goods-grid");
+            const adminNewsList = document.getElementById("admin-news-list");
+            const adminGoodsList = document.getElementById("admin-goods-list");
+
+            newsContainer.innerHTML = appData.news.length === 0 ? '<p class="text-sm text-slate-400">お知らせはありません。</p>' : '';
+            appData.news.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(item => {
+                newsContainer.innerHTML += `<div class="bg-white border p-5 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center gap-4"><div class="flex items-center gap-2 shrink-0"><span class="text-xs font-bold text-slate-400">${item.date}</span>${item.tag ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">${item.tag}</span>`:''}</div><div class="text-slate-700 text-sm">${item.content}</div></div>`;
+            });
+
+            goodsGrid.innerHTML = appData.goods.length === 0 ? '<p class="text-sm text-slate-400">登録されたグッズはありません。</p>' : '';
+            appData.goods.forEach(item => {
+                goodsGrid.innerHTML += `<div class="bg-white border rounded-2xl overflow-hidden shadow-sm flex flex-col"><div class="bg-slate-50 py-10 flex items-center justify-center text-5xl"><span>${item.emoji || '👕'}</span></div><div class="p-4 flex-grow flex flex-col justify-between space-y-2"><div><h3 class="font-bold text-slate-800 text-sm">${item.name}</h3><p class="text-xs text-slate-400">${item.desc || ''}</p></div><div class="flex items-center justify-between border-t pt-2 mt-2"><span class="font-bold text-sm">¥${item.price.toLocaleString()}</span><button class="px-3 py-1 rounded bg-indigo-600 text-white text-xs">購入</button></div></div></div>`;
+            });
+
+            adminNewsList.innerHTML = '';
+            appData.news.forEach(item => {
+                adminNewsList.innerHTML += `<div class="flex items-center justify-between bg-slate-50 p-2 rounded border text-xs"><span>${item.date} ${item.content}</span><button onclick="window.deleteNews('${item.fsId}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></div>`;
+            });
+
+            adminGoodsList.innerHTML = '';
+            appData.goods.forEach(item => {
+                adminGoodsList.innerHTML += `<div class="flex items-center justify-between bg-slate-50 p-2 rounded border text-xs"><span>${item.name}</span><button onclick="window.deleteGoods('${item.fsId}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></div>`;
+            });
+        }
+
+        document.getElementById("btn-submit-login").addEventListener("click", async () => {
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast("管理者ログイン成功！");
+                document.getElementById("login-modal").classList.add("hidden");
+            } catch (err) {
+                showToast("ログイン失敗: " + err.message, "error");
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            const isLogged = !!user;
+            document.getElementById("nav-login-btn").classList.toggle("hidden", isLogged);
+            document.getElementById("nav-logout-btn").classList.toggle("hidden", !isLogged);
+            document.getElementById("nav-admin-btn").classList.toggle("hidden", !isLogged);
+            if (isLogged) {
+                toggleViews(true);
+            } else {
+                switchPage('home');
+            }
+            fetchFirebaseData();
+        });
+
+        document.getElementById("nav-logout-btn").addEventListener("click", () => signOut(auth));
+
+        document.getElementById("btn-add-news").addEventListener("click", async () => {
+            const date = document.getElementById("admin-news-date").value || new Date().toISOString().split('T')[0];
+            const tag = document.getElementById("admin-news-tag").value.trim();
+            const content = document.getElementById("admin-news-content").value.trim();
+            if(!content) return showToast("本文を入力してください", "error");
+            
+            await addDoc(collection(db, "news"), { date, tag, content });
+            document.getElementById("admin-news-content").value = "";
+            showToast("おしらせを投稿しました！");
+            fetchFirebaseData();
+        });
+
+        document.getElementById("btn-add-goods").addEventListener("click", async () => {
+            const name = document.getElementById("admin-goods-name").value.trim();
+            const price = parseInt(document.getElementById("admin-goods-price").value);
+            const emoji = document.getElementById("admin-goods-emoji").value;
+            const desc = document.getElementById("admin-goods-desc").value.trim();
+            if(!name || isNaN(price)) return showToast("正しい商品名と価格を入力してください", "error");
+
+            await addDoc(collection(db, "goods"), { name, price, emoji, desc });
+            document.getElementById("admin-goods-name").value = "";
+            document.getElementById("admin-goods-price").value = "";
+            document.getElementById("admin-goods-desc").value = "";
+            showToast("グッズを登録しました！");
+            fetchFirebaseData();
+        });
+
+        window.deleteNews = async (fsId) => { if(confirm("削除しますか？")) { await deleteDoc(doc(db, "news", fsId)); fetchFirebaseData(); } };
+        window.deleteGoods = async (fsId) => { if(confirm("削除しますか？")) { await deleteDoc(doc(db, "goods", fsId)); fetchFirebaseData(); } };
+
+        function toggleViews(showAdmin) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById("admin-view").classList.toggle("hidden", !showAdmin);
+            
+            document.getElementById("nav-admin-btn").classList.toggle("hidden", showAdmin || !auth.currentUser);
+            document.getElementById("nav-view-btn").classList.toggle("hidden", !showAdmin);
+            document.getElementById("hero-section").classList.toggle("hidden", showAdmin);
+            
+            document.getElementById("user-nav-links").classList.toggle("hidden", showAdmin);
+            document.getElementById("mobile-nav-links").classList.toggle("hidden", showAdmin);
+            
+            if(!showAdmin) {
+                document.getElementById('page-home').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById("nav-login-btn").addEventListener("click", () => document.getElementById("login-modal").classList.remove("hidden"));
+        document.getElementById("btn-close-login").addEventListener("click", () => document.getElementById("login-modal").classList.add("hidden"));
+        document.getElementById("nav-view-btn").addEventListener("click", () => toggleViews(false));
+        document.getElementById("nav-admin-btn").addEventListener("click", () => toggleViews(true));
+    </script>
+</body>
+</html>
