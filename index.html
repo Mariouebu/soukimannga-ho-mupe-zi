@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Official Website & Advanced Admin System</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
@@ -18,7 +15,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- ヘッダー・ナビゲーション -->
     <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-2">
             <a href="#" onclick="switchPage('home')" class="flex items-center gap-2 font-bold text-base md:text-xl text-indigo-600 shrink-0 hover:opacity-85 transition-opacity">
@@ -26,7 +22,6 @@
                 <span>MY SHOP</span>
             </a>
             
-            <!-- ナビゲーションリンク -->
             <nav id="user-nav-links" class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
                 <button onclick="switchPage('home')" class="hover:text-indigo-600 transition-colors">ホーム</button>
                 <button onclick="switchPage('characters')" class="hover:text-indigo-600 transition-colors">キャラクター</button>
@@ -34,7 +29,6 @@
                 <span id="dynamic-nav-links" class="flex items-center gap-6"></span>
             </nav>
 
-            <!-- ボタンエリア（スマホ対応・管理者用） -->
             <div class="flex items-center gap-1.5 md:gap-3 ml-auto">
                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
@@ -55,7 +49,6 @@
             </div>
         </div>
         
-        <!-- スマホ用サブナビゲーション -->
         <div id="mobile-nav-links" class="md:hidden flex justify-around border-t border-slate-100 bg-white py-2 text-xs font-semibold text-slate-600 overflow-x-auto whitespace-nowrap">
             <button onclick="switchPage('home')" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-house"></i><span>ホーム</span></button>
             <button onclick="switchPage('characters')" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-users"></i><span>キャラ</span></button>
@@ -64,7 +57,6 @@
         </div>
     </header>
 
-    <!-- ヒーローセクション -->
     <section id="hero-section" class="bg-gradient-to-r from-indigo-600 to-violet-700 text-white py-12 px-4 text-center">
         <div class="max-w-4xl mx-auto space-y-3">
             <h1 id="hero-title" class="text-2xl md:text-4xl font-extrabold tracking-tight">オフィシャルWEBサイト</h1>
@@ -72,12 +64,9 @@
         </div>
     </section>
 
-    <!-- メインコンテンツ -->
     <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
         
-        <!-- ==================== 1. ホームページ画面 ==================== -->
         <div id="page-home" class="page-content space-y-12 fade-in">
-            <!-- お知らせ -->
             <section>
                 <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-bullhorn text-indigo-600"></i><span>📢 最新お知らせ</span>
@@ -87,7 +76,6 @@
                 </div>
             </section>
             
-            <!-- グッズ -->
             <section>
                 <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-bag-shopping text-indigo-600"></i><span>🛍 グッズ紹介 & 販売</span>
@@ -98,7 +86,6 @@
             </section>
         </div>
 
-        <!-- ==================== 2. キャラクター紹介ページ画面 ==================== -->
         <div id="page-characters" class="page-content hidden space-y-12 fade-in">
             <section>
                 <h2 class="text-xl md:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
@@ -109,7 +96,6 @@
                 </div>
             </section>
 
-            <!-- キャラクター能力表 -->
             <section>
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                     <i class="fa-solid fa-table-list text-indigo-500"></i><span>📊 キャラクター能力表</span>
@@ -127,14 +113,13 @@
                                 </tr>
                             </thead>
                             <tbody id="characters-table-body" class="divide-y divide-slate-100 text-slate-700">
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- ==================== 3. お問い合わせページ画面 ==================== -->
         <div id="page-contact" class="page-content hidden max-w-xl mx-auto fade-in">
             <div class="bg-white border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm space-y-6">
                 <div class="text-center">
@@ -163,7 +148,6 @@
             </div>
         </div>
 
-        <!-- ==================== 5. カスタムページ表示エリア ==================== -->
         <div id="dynamic-page-viewer" class="page-content hidden max-w-3xl mx-auto fade-in">
             <div class="bg-white border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm">
                 <h2 id="dynamic-view-title" class="text-2xl font-bold text-slate-900 border-b pb-4 mb-4"></h2>
@@ -171,9 +155,7 @@
             </div>
         </div>
 
-        <!-- ==================== 4. 管理者ダッシュボード画面 ==================== -->
         <div id="admin-view" class="hidden space-y-8 fade-in">
-            <!-- タブ切り替えバー -->
             <div class="flex border-b border-slate-200 overflow-x-auto gap-2">
                 <button onclick="switchAdminTab('items')" class="admin-tab-btn px-4 py-2 text-sm font-bold border-b-2 border-indigo-600 text-indigo-600 shrink-0">📢 お知らせ・グッズ</button>
                 <button onclick="switchAdminTab('chars')" class="admin-tab-btn px-4 py-2 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-indigo-600 shrink-0">🌟 キャラクター編集</button>
@@ -181,7 +163,6 @@
                 <button onclick="switchAdminTab('logs')" class="admin-tab-btn px-4 py-2 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-indigo-600 shrink-0">👀 閲覧者ログ（アクセス解析）</button>
             </div>
 
-            <!-- タブ①：お知らせ＆グッズ管理 -->
             <div id="admin-tab-items" class="admin-tab-content grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="bg-white border p-6 rounded-2xl space-y-3 shadow-sm">
                     <h3 class="font-bold text-base text-slate-900 border-b pb-2">📢 お知らせの投稿</h3>
@@ -294,7 +275,6 @@
         </div>
     </div>
 
-    <!-- データベース未初期化エラー警告モーダル (新追加) -->
     <div id="error-setup-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 relative shadow-2xl border border-rose-100 space-y-5">
             <div class="text-center space-y-2">
@@ -337,7 +317,7 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // あなた専用のFirebase連携キーをプリセット済み
+        // Firebase連携設定
         const firebaseConfig = {
             apiKey: "AIzaSyDcu0SS2Rp1veiNPV14onEIu-PhKdoCwYw",
             authDomain: "my-shop-com.firebaseapp.com",
@@ -354,7 +334,7 @@
 
         let appData = { news: [], goods: [], characters: [], pages: [], logs: [] };
 
-        // セキュリティ対策：不正なHTMLコード入力を無害化するサニタイズ処理
+        // HTMLサニタイズ
         function escapeHtml(str) {
             if (!str) return '';
             return str.replace(/&/g, '&amp;')
@@ -364,7 +344,7 @@
                       .replace(/'/g, '&#39;');
         }
 
-        // アクセスログ自動収集ロジック
+        // アクセスログ自動収集
         async function recordAccessLog(pageName) {
             try {
                 await addDoc(collection(db, "access_logs"), {
@@ -376,10 +356,33 @@
             } catch (e) { console.error("ログ収集エラー:", e); }
         }
 
-        // ページ切り替えメイン制御
+        // トースト通知関数
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            if (!container) return;
+            const toast = document.createElement("div");
+            toast.className = `px-4 py-3 rounded-xl shadow-lg font-bold text-sm text-white fade-in flex items-center gap-2 transition-all duration-300 transform translate-y-0`;
+            if (type === "success") {
+                toast.classList.add("bg-emerald-600");
+            } else if (type === "error") {
+                toast.classList.add("bg-rose-600");
+            } else {
+                toast.classList.add("bg-indigo-600");
+            }
+            toast.innerHTML = `${message}`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.transform = "translateY(10px)";
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ページ切り替え制御
         window.switchPage = function(pageId, isCustom = false) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
             document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('dynamic-page-viewer').classList.add('hidden');
             
             if (isCustom) {
                 const targetPage = appData.pages.find(p => p.fsId === pageId);
@@ -422,302 +425,20 @@
                 b.classList.add('text-slate-500', 'border-transparent', 'font-medium');
             });
             document.getElementById(`admin-tab-${tabId}`).classList.remove('hidden');
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.add('text-indigo-600', 'border-indigo-600', 'font-bold');
-                event.currentTarget.classList.remove('text-slate-500', 'border-transparent', 'font-medium');
+            if(window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('text-indigo-600', 'border-indigo-600', 'font-bold');
+                window.event.currentTarget.classList.remove('text-slate-500', 'border-transparent', 'font-medium');
             }
         }
 
-        // お問い合わせデモ送信
-        window.handleContactSubmit = function(event) {
-            event.preventDefault();
-            const safeName = escapeHtml(document.getElementById("contact-name").value);
-            showToast(`📬 ${safeName}様、お問い合わせを受信（シミュレート）しました！`);
-            document.getElementById("contact-form").reset();
-        }
-
-        function showToast(message, type = "success") {
-            const container = document.getElementById("toast-container");
-            const toast = document.createElement("div");
-            toast.className = `px-4 py-3 rounded-xl border text-sm font-semibold shadow-xl transition-all ${type === "error" ? "bg-rose-50 border-rose-100 text-rose-800" : "bg-emerald-50 border-emerald-100 text-emerald-800"}`;
-            toast.innerHTML = message;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
-        }
-
-        // 全データベース情報の同期・取得
-        async function fetchAllFirebaseData() {
-            try {
-                const newsSnap = await getDocs(collection(db, "news"));
-                appData.news = []; newsSnap.forEach(d => appData.news.push({ ...d.data(), fsId: d.id }));
-
-                const goodsSnap = await getDocs(collection(db, "goods"));
-                appData.goods = []; goodsSnap.forEach(d => appData.goods.push({ ...d.data(), fsId: d.id }));
-
-                const charSnap = await getDocs(collection(db, "custom_characters"));
-                appData.characters = []; charSnap.forEach(d => appData.characters.push({ ...d.data(), fsId: d.id }));
-
-                const pageSnap = await getDocs(collection(db, "custom_pages"));
-                appData.pages = []; pageSnap.forEach(d => appData.pages.push({ ...d.data(), fsId: d.id }));
-
-                const logSnap = await getDocs(collection(db, "access_logs"));
-                appData.logs = []; logSnap.forEach(d => appData.logs.push({ ...d.data(), fsId: d.id }));
-
-                renderUI();
-            } catch (err) {
-                console.error("Firestore接続エラー:", err);
-                // データベースが未有効化の場合、専用のエラーモーダルを表示
-                if (err.message && (err.message.includes("API") || err.message.includes("permission-denied") || err.message.includes("Firestore API"))) {
-                    document.getElementById("error-setup-modal").classList.remove("hidden");
-                } else {
-                    showToast("データ同期失敗: " + err.message, "error");
-                }
-            }
-        }
-
-        // 画面へのHTMLレンダリング（XSS徹底防御版）
-        function renderUI() {
-            // 1. お知らせ
-            const newsContainer = document.getElementById("news-list-container");
-            newsContainer.innerHTML = appData.news.length === 0 ? '<p class="text-sm text-slate-400 text-center py-4">現在お知らせはありません。</p>' : '';
-            appData.news.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(item => {
-                newsContainer.innerHTML += `<div class="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm text-sm flex flex-col md:flex-row md:items-center gap-3"><div><span class="text-xs font-bold text-slate-400 mr-2">${escapeHtml(item.date)}</span>${item.tag ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">${escapeHtml(item.tag)}</span>`:''}</div><div class="text-slate-700">${escapeHtml(item.content)}</div></div>`;
-            });
-
-            // 2. グッズ
-            const goodsGrid = document.getElementById("goods-grid");
-            goodsGrid.innerHTML = appData.goods.length === 0 ? '<p class="text-sm text-slate-400 col-span-full text-center py-4">登録されたグッズはまだありません。</p>' : '';
-            appData.goods.forEach(item => {
-                goodsGrid.innerHTML += `<div class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col"><div class="bg-slate-50 py-8 flex items-center justify-center text-4xl"><span>${escapeHtml(item.emoji)}</span></div><div class="p-4 flex-grow flex flex-col justify-between"><div><h3 class="font-bold text-slate-800 text-sm">${escapeHtml(item.name)}</h3><p class="text-xs text-slate-400 mt-1">${escapeHtml(item.desc || '')}</p></div><div class="flex items-center justify-between border-t pt-2 mt-3"><span class="font-bold text-sm text-slate-900">¥${parseInt(item.price || 0).toLocaleString()}</span><button class="px-3 py-1 rounded bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors">購入</button></div></div></div>`;
-            });
-
-            // 3. キャラクター表示 (カード & 能力表)
-            const charGrid = document.getElementById("characters-grid");
-            const charTable = document.getElementById("characters-table-body");
-            charGrid.innerHTML = appData.characters.length === 0 ? '<p class="text-sm text-slate-400 col-span-full text-center py-4">キャラクターデータが登録されていません。</p>' : '';
-            charTable.innerHTML = appData.characters.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400 text-xs">データがありません。</td></tr>' : '';
-
-            appData.characters.forEach(c => {
-                charGrid.innerHTML += `<div class="bg-white border border-slate-100 rounded-2xl p-5 text-center space-y-3 shadow-sm relative hover:shadow-md transition-shadow"><div class="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-4xl mx-auto border border-indigo-100">${escapeHtml(c.emoji)}</div><div><h3 class="font-bold text-base text-slate-800">${escapeHtml(c.name)}</h3><p class="text-xs text-indigo-600 font-bold mt-0.5">${escapeHtml(c.tag)}</p></div><p class="text-xs text-slate-500 leading-relaxed">${escapeHtml(c.desc)}</p></div>`;
-                
-                const pStars = "⭐".repeat(Math.min(Math.max(parseInt(c.power) || 1, 1), 5));
-                const sStars = "⭐".repeat(Math.min(Math.max(parseInt(c.speed) || 1, 1), 5));
-                charTable.innerHTML += `<tr class="hover:bg-slate-50/50"><td class="p-4 font-bold flex items-center gap-2 text-slate-800"><span>${escapeHtml(c.emoji)}</span> ${escapeHtml(c.name)}</td><td class="p-4"><span class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold">${escapeHtml(c.tag)}</span></td><td class="p-4 text-xs">${escapeHtml(c.skill)}</td><td class="p-4 text-center text-xs text-indigo-600 whitespace-nowrap">${pStars}</td><td class="p-4 text-center text-xs text-indigo-600 whitespace-nowrap">${sStars}</td></tr>`;
-            });
-
-            // 4. 動的カスタムページメニューリンク生成
-            const dynNav = document.getElementById("dynamic-nav-links");
-            const dynMobile = document.getElementById("dynamic-mobile-links");
-            dynNav.innerHTML = ""; dynMobile.innerHTML = "";
-            appData.pages.forEach(p => {
-                dynNav.innerHTML += `<button onclick="switchPage('${p.fsId}', true)" class="hover:text-indigo-600 transition-colors">${escapeHtml(p.title)}</button>`;
-                dynMobile.innerHTML += `<button onclick="switchPage('${p.fsId}', true)" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600 text-slate-600 shrink-0"><i class="fa-solid fa-file-invoice"></i><span>${escapeHtml(p.title)}</span></button>`;
-            });
-
-            // 5. 管理画面側のデータ一覧レンダリング
-            document.getElementById("admin-news-list").innerHTML = "";
-            appData.news.forEach(i => { document.getElementById("admin-news-list").innerHTML += `<div class="flex justify-between bg-slate-50 p-2 rounded border border-slate-100 items-center"><span>[${escapeHtml(i.date)}] ${escapeHtml(i.content)}</span><button onclick="window.deleteItem('news','${i.fsId}')" class="text-rose-500 hover:text-rose-700 ml-2"><i class="fa-solid fa-trash"></i></button></div>` });
-            
-            document.getElementById("admin-goods-list").innerHTML = "";
-            appData.goods.forEach(i => { document.getElementById("admin-goods-list").innerHTML += `<div class="flex justify-between bg-slate-50 p-2 rounded border border-slate-100 items-center"><span>${escapeHtml(i.name)}</span><button onclick="window.deleteItem('goods','${i.fsId}')" class="text-rose-500 hover:text-rose-700 ml-2"><i class="fa-solid fa-trash"></i></button></div>` });
-
-            document.getElementById("admin-chars-list").innerHTML = "";
-            appData.characters.forEach(c => {
-                document.getElementById("admin-chars-list").innerHTML += `<div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs"><div class="flex items-center gap-2"><span class="text-2xl">${escapeHtml(c.emoji)}</span><div><p class="font-bold text-slate-800">${escapeHtml(c.name)}</p><p class="text-[10px] text-slate-400">${escapeHtml(c.tag)}</p></div></div><div class="flex gap-3"><button onclick="window.loadCharToForm('${c.fsId}')" class="text-indigo-600 font-bold hover:underline">編集</button><button onclick="window.deleteItem('custom_characters','${c.fsId}')" class="text-rose-500 hover:text-rose-700"><i class="fa-solid fa-trash"></i></button></div></div>`;
-            });
-
-            document.getElementById("admin-pages-list").innerHTML = "";
-            appData.pages.forEach(p => {
-                document.getElementById("admin-pages-list").innerHTML += `<div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs"><div><span class="font-bold text-slate-800 text-sm">${escapeHtml(p.title)}</span></div><button onclick="window.deleteItem('custom_pages','${p.fsId}')" class="text-rose-500 font-bold hover:text-rose-700"><i class="fa-solid fa-trash"></i> 削除</button></div>`;
-            });
-
-            // 6. アクセスログ
-            const logsTbody = document.getElementById("admin-logs-tbody");
-            logsTbody.innerHTML = appData.logs.length === 0 ? '<tr><td colspan="3" class="p-4 text-center text-slate-400">ログはまだありません。</td></tr>' : '';
-            appData.logs.sort((a,b) => b.time.localeCompare(a.time)).forEach(l => {
-                logsTbody.innerHTML += `<tr class="hover:bg-slate-50 text-slate-600"><td class="p-3 font-semibold text-slate-900 whitespace-nowrap">${escapeHtml(l.time)}</td><td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold">${escapeHtml(l.page)}</span></td><td class="p-3 text-slate-400 max-w-xs truncate" title="${escapeHtml(l.userAgent)}">${escapeHtml(l.userAgent)}</td></tr>`;
-            });
-        }
-
-        // キャラクター編集用フォームへのデータ展開
-        window.loadCharToForm = function(fsId) {
-            const c = appData.characters.find(char => char.fsId === fsId);
-            if(c) {
-                document.getElementById("admin-char-id").value = c.fsId;
-                document.getElementById("admin-char-name").value = c.name;
-                document.getElementById("admin-char-emoji").value = c.emoji;
-                document.getElementById("admin-char-tag").value = c.tag;
-                document.getElementById("admin-char-power").value = c.power;
-                document.getElementById("admin-char-speed").value = c.speed;
-                document.getElementById("admin-char-skill").value = c.skill;
-                document.getElementById("admin-char-desc").value = c.desc;
-                showToast("キャラ情報をフォームに読み込みました！");
-                switchAdminTab('chars');
-            }
-        }
-
-        // キャラクター追加・編集のセーブ処理
-        document.getElementById("btn-save-char").addEventListener("click", async () => {
-            const fsId = document.getElementById("admin-char-id").value;
-            const name = document.getElementById("admin-char-name").value.trim();
-            if(!name) return showToast("名前を入力してください", "error");
-
-            const charData = {
-                name: name,
-                emoji: document.getElementById("admin-char-emoji").value.trim() || "🦊",
-                tag: document.getElementById("admin-char-tag").value.trim() || "ノーマル",
-                power: parseInt(document.getElementById("admin-char-power").value) || 3,
-                speed: parseInt(document.getElementById("admin-char-speed").value) || 3,
-                skill: document.getElementById("admin-char-skill").value.trim() || "特になし",
-                desc: document.getElementById("admin-char-desc").value.trim() || ""
-            };
-
-            try {
-                if(fsId) {
-                    await setDoc(doc(db, "custom_characters", fsId), charData);
-                    showToast("キャラクター情報を更新完了！");
-                } else {
-                    await addDoc(collection(db, "custom_characters"), charData);
-                    showToast("新しいキャラクターを追加登録しました！");
-                }
-                clearCharForm(); fetchAllFirebaseData();
-            } catch (e) { showToast("保存失敗: " + e.message, "error"); }
-        });
-
-        function clearCharForm() {
-            document.getElementById("admin-char-id").value = "";
-            document.getElementById("admin-char-name").value = "";
-            document.getElementById("admin-char-emoji").value = "";
-            document.getElementById("admin-char-tag").value = "";
-            document.getElementById("admin-char-power").value = "";
-            document.getElementById("admin-char-speed").value = "";
-            document.getElementById("admin-char-skill").value = "";
-            document.getElementById("admin-char-desc").value = "";
-        }
-        document.getElementById("btn-clear-char-form").addEventListener("click", clearCharForm);
-
-        // カスタムページ作成
-        document.getElementById("btn-add-page").addEventListener("click", async () => {
-            const title = document.getElementById("admin-page-title").value.trim();
-            const content = document.getElementById("admin-page-content").value.trim();
-            if(!title || !content) return showToast("タイトルと本文を入力してください", "error");
-
-            try {
-                await addDoc(collection(db, "custom_pages"), { title, content });
-                document.getElementById("admin-page-title").value = "";
-                document.getElementById("admin-page-content").value = "";
-                showToast(`特設ページ「${title}」を正常に公開しました！`);
-                fetchAllFirebaseData();
-            } catch(e) { showToast("公開エラー: " + e.message, "error"); }
-        });
-
-        // 共通削除用ファンクション
-        window.deleteItem = async (colName, fsId) => {
-            if(confirm("データを完全に削除します。よろしいですか？")) {
-                try {
-                    await deleteDoc(doc(db, colName, fsId));
-                    showToast("削除が完了しました");
-                    fetchAllFirebaseData();
-                } catch(e) { showToast("削除失敗: " + e.message, "error"); }
-            }
-        };
-
-        // ログ一括クリーンアップ
-        document.getElementById("btn-clear-logs").addEventListener("click", async () => {
-            if(confirm("すべてのアクセスログデータを初期化消去しますか？")) {
-                try {
-                    const snaps = await getDocs(collection(db, "access_logs"));
-                    for (const d of snaps.docs) {
-                        await deleteDoc(doc(db, "access_logs", d.id));
-                    }
-                    showToast("ログ履歴をすべて削除しました。");
-                    fetchAllFirebaseData();
-                } catch(e) { showToast("クリーンアップ失敗", "error"); }
-            }
-        });
-
-        // Firebase ログイン & ログアウト & 監視
-        document.getElementById("btn-submit-login").addEventListener("click", async () => {
-            const email = document.getElementById("login-email").value.trim();
-            const password = document.getElementById("login-password").value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                showToast("本番環境ログインに成功しました！");
-                document.getElementById("login-modal").classList.add("hidden");
-            } catch (err) { showToast("認証エラー: " + err.message, "error"); }
-        });
-
-        onAuthStateChanged(auth, (user) => {
-            const isLogged = !!user;
-            document.getElementById("nav-login-btn").classList.toggle("hidden", isLogged);
-            document.getElementById("nav-logout-btn").classList.toggle("hidden", !isLogged);
-            document.getElementById("nav-admin-btn").classList.toggle("hidden", !isLogged);
-            if (isLogged) {
-                toggleViews(true);
-            } else {
-                switchPage('home');
-            }
-            fetchAllFirebaseData();
-        });
-
-        document.getElementById("nav-logout-btn").addEventListener("click", () => signOut(auth));
-
-        // お知らせ・グッズの追加
-        document.getElementById("btn-add-news").addEventListener("click", async () => {
-            const date = document.getElementById("admin-news-date").value || new Date().toISOString().split('T')[0];
-            const tag = document.getElementById("admin-news-tag").value.trim();
-            const content = document.getElementById("admin-news-content").value.trim();
-            if(!content) return showToast("本文を入力してください", "error");
-            await addDoc(collection(db, "news"), { date, tag, content });
-            document.getElementById("admin-news-content").value = "";
-            showToast("お知らせを書き込みました！"); fetchAllFirebaseData();
-        });
-
-        document.getElementById("btn-add-goods").addEventListener("click", async () => {
-            const name = document.getElementById("admin-goods-name").value.trim();
-            const price = parseInt(document.getElementById("admin-goods-price").value);
-            const emoji = document.getElementById("admin-goods-emoji").value;
-            const desc = document.getElementById("admin-goods-desc").value.trim();
-            if(!name || isNaN(price)) return showToast("商品名と価格を正しく入力してください", "error");
-            await addDoc(collection(db, "goods"), { name, price, emoji, desc });
-            document.getElementById("admin-goods-name").value = "";
-            document.getElementById("admin-goods-price").value = "";
-            document.getElementById("admin-goods-desc").value = "";
-            showToast("新商品をストアへ登録しました！"); fetchAllFirebaseData();
-        });
-
-        function toggleViews(showAdmin) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-            document.getElementById("admin-view").classList.toggle("hidden", !showAdmin);
-            document.getElementById("nav-admin-btn").classList.toggle("hidden", showAdmin || !auth.currentUser);
-            document.getElementById("nav-view-btn").classList.toggle("hidden", !showAdmin);
-            document.getElementById("hero-section").classList.toggle("hidden", showAdmin);
-            document.getElementById("user-nav-links").classList.toggle("hidden", showAdmin);
-            document.getElementById("mobile-nav-links").classList.toggle("hidden", showAdmin);
-            if(!showAdmin) document.getElementById('page-home').classList.remove('hidden');
-        }
-
-        document.getElementById("nav-login-btn").addEventListener("click", () => document.getElementById("login-modal").classList.remove("hidden"));
-        document.getElementById("btn-close-login").addEventListener("click", () => document.getElementById("login-modal").classList.add("hidden"));
-        document.getElementById("nav-view-btn").addEventListener("click", () => toggleViews(false));
-        document.getElementById("nav-admin-btn").addEventListener("click", () => toggleViews(true));
-    </script>
-</body>
-// お問い合わせ送信処理（Firestoreの「contacts」コレクションに保存）
+        // お問い合わせ送信処理
         window.handleContactSubmit = async function(event) {
             event.preventDefault();
-            
             const name = document.getElementById("contact-name").value;
             const email = document.getElementById("contact-email").value;
             const message = document.getElementById("contact-message").value;
-
             try {
-                await addDoc(collection(db, "contacts"), {
-                    name: name,
-                    email: email,
-                    message: message,
-                    timestamp: serverTimestamp()
-                });
+                await addDoc(collection(db, "contacts"), { name, email, message, timestamp: serverTimestamp() });
                 showToast("📬 お問い合わせを送信しました！", "success");
                 document.getElementById("contact-form").reset();
             } catch (e) {
@@ -726,33 +447,7 @@
             }
         };
 
-        // トースト通知の表示関数
-        function showToast(message, type = "success") {
-            const container = document.getElementById("toast-container");
-            const toast = document.createElement("div");
-            toast.className = `px-4 py-3 rounded-xl shadow-lg font-bold text-sm text-white fade-in flex items-center gap-2 transition-all duration-300 transform translate-y-0`;
-            
-            if (type === "success") {
-                toast.classList.add("bg-emerald-600");
-            } else if (type === "error") {
-                toast.classList.add("bg-rose-600");
-            } else {
-                toast.classList.add("bg-indigo-600");
-            }
-            
-            toast.innerHTML = `<span>${message}</span>`;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.opacity = "0";
-                toast.style.transform = "translateY(10px)";
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // ==================== Firebase Authentication (ログイン・ログアウト) ====================
-        
-        // ログインモーダルの開閉
+        // Auth ログイン処理関係
         document.getElementById("nav-login-btn").addEventListener("click", () => {
             document.getElementById("login-modal").classList.remove("hidden");
         });
@@ -760,11 +455,9 @@
             document.getElementById("login-modal").classList.add("hidden");
         });
 
-        // ログイン実行
         document.getElementById("btn-submit-login").addEventListener("click", async () => {
             const email = document.getElementById("login-email").value;
             const password = document.getElementById("login-password").value;
-
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 showToast("🔒 管理者としてログインしました");
@@ -777,7 +470,6 @@
             }
         });
 
-        // ログアウト実行
         document.getElementById("nav-logout-btn").addEventListener("click", async () => {
             try {
                 await signOut(auth);
@@ -788,32 +480,26 @@
             }
         });
 
-        // 管理画面への切り替え
         document.getElementById("nav-admin-btn").addEventListener("click", () => {
             document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
             document.getElementById('admin-view').classList.remove('hidden');
             document.getElementById('hero-section').classList.add('hidden');
-            
             document.getElementById("nav-admin-btn").classList.add("hidden");
             document.getElementById("nav-view-btn").classList.remove("hidden");
             document.getElementById("user-nav-links").classList.add("hidden");
             document.getElementById("mobile-nav-links").classList.add("hidden");
         });
 
-        // ユーザー画面に戻る
         document.getElementById("nav-view-btn").addEventListener("click", () => {
             switchPage('home');
         });
 
-        // ログイン状態の監視 (Auth State Observer)
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // 管理者ログイン時
                 document.getElementById("nav-login-btn").classList.add("hidden");
                 document.getElementById("nav-logout-btn").classList.remove("hidden");
                 document.getElementById("nav-admin-btn").classList.remove("hidden");
             } else {
-                // 未ログイン時
                 document.getElementById("nav-login-btn").classList.remove("hidden");
                 document.getElementById("nav-logout-btn").classList.add("hidden");
                 document.getElementById("nav-admin-btn").classList.add("hidden");
@@ -821,91 +507,65 @@
             }
         });
 
-
-        // ==================== Firestore データ同期・描画処理 ====================
-
-        // Firestoreの有効化エラー（permission-denied）をキャッチする共通処理
+        // Firestore 同期・描画処理
         function handleFirestoreError(error) {
             console.error("Firestoreエラー:", error);
-            if (error.code === 'permission-denied' || error.message.includes('Firestore API')) {
+            if (error.code === 'permission-denied' || (error.message && error.message.includes('Firestore API'))) {
                 document.getElementById("error-setup-modal").classList.remove("hidden");
             }
         }
 
-        // 全データ読み込みと画面反映
         async function loadAllData() {
             try {
-                // 1. お知らせ (news) の取得
                 const newsSnap = await getDocs(collection(db, "news"));
                 appData.news = [];
-                newsSnap.forEach(docSnap => {
-                    appData.news.push({ fsId: docSnap.id, ...docSnap.data() });
-                });
+                newsSnap.forEach(docSnap => { appData.news.push({ fsId: docSnap.id, ...docSnap.data() }); });
                 renderNews();
 
-                // 2. グッズ (goods) の取得
                 const goodsSnap = await getDocs(collection(db, "goods"));
                 appData.goods = [];
-                goodsSnap.forEach(docSnap => {
-                    appData.goods.push({ fsId: docSnap.id, ...docSnap.data() });
-                });
+                goodsSnap.forEach(docSnap => { appData.goods.push({ fsId: docSnap.id, ...docSnap.data() }); });
                 renderGoods();
 
-                // 3. キャラクター (characters) の取得
                 const charsSnap = await getDocs(collection(db, "characters"));
                 appData.characters = [];
-                charsSnap.forEach(docSnap => {
-                    appData.characters.push({ fsId: docSnap.id, ...docSnap.data() });
-                });
+                charsSnap.forEach(docSnap => { appData.characters.push({ fsId: docSnap.id, ...docSnap.data() }); });
                 renderCharacters();
 
-                // 4. カスタムページ (pages) の取得
                 const pagesSnap = await getDocs(collection(db, "pages"));
                 appData.pages = [];
-                pagesSnap.forEach(docSnap => {
-                    appData.pages.push({ fsId: docSnap.id, ...docSnap.data() });
-                });
+                pagesSnap.forEach(docSnap => { appData.pages.push({ fsId: docSnap.id, ...docSnap.data() }); });
                 renderCustomPages();
 
-                // 5. アクセスログ (access_logs) の取得
                 const logsSnap = await getDocs(collection(db, "access_logs"));
                 appData.logs = [];
-                logsSnap.forEach(docSnap => {
-                    appData.logs.push({ fsId: docSnap.id, ...docSnap.data() });
-                });
-                // ログは新しい順にソートして表示
+                logsSnap.forEach(docSnap => { appData.logs.push({ fsId: docSnap.id, ...docSnap.data() }); });
                 appData.logs.sort((a, b) => new Date(b.time) - new Date(a.time));
                 renderLogs();
-
             } catch (error) {
                 handleFirestoreError(error);
             }
         }
 
-        // --- 描画関数群 ---
-
         function renderNews() {
             const container = document.getElementById("news-list-container");
             const adminList = document.getElementById("admin-news-list");
-            
             if (appData.news.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 text-slate-400">現在お知らせはありません。</div>`;
-                adminList.innerHTML = `<div class="text-slate-400 text-center py-2">データなし</div>`;
+                container.innerHTML = `<div class="text-slate-400 text-sm">現在お知らせはありません。</div>`;
+                adminList.innerHTML = `<div class="text-slate-400">データなし</div>`;
                 return;
             }
-
             container.innerHTML = appData.news.map(item => `
-                <div class="bg-white border border-slate-100 p-4 rounded-xl shadow-sm flex flex-col md:flex-row md:items-center gap-3">
-                    <span class="text-xs font-mono text-slate-400 shrink-0">${escapeHtml(item.date)}</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100 w-max">${escapeHtml(item.tag)}</span>
-                    <p class="text-sm text-slate-700 font-medium whitespace-pre-wrap">${escapeHtml(item.content)}</p>
+                <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col sm:flex-row sm:items-center gap-3">
+                    <span class="text-xs font-mono text-slate-400">${escapeHtml(item.date)}</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-indigo-50 text-indigo-600 border border-indigo-100 self-start sm:self-auto">${escapeHtml(item.tag)}</span>
+                    <p class="text-slate-700 text-sm">${escapeHtml(item.content)}</p>
                 </div>
             `).join('');
-
             adminList.innerHTML = appData.news.map(item => `
-                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border mb-1">
+                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100">
                     <span class="truncate max-w-[180px]">${escapeHtml(item.date)} - ${escapeHtml(item.content)}</span>
-                    <button onclick="deleteData('news', '${item.fsId}')" class="text-rose-600 hover:text-rose-800"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="deleteData('news', '${item.fsId}')" class="text-rose-600 font-bold hover:underline ml-2">削除</button>
                 </div>
             `).join('');
         }
@@ -913,33 +573,28 @@
         function renderGoods() {
             const grid = document.getElementById("goods-grid");
             const adminList = document.getElementById("admin-goods-list");
-
             if (appData.goods.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-6 text-slate-400">現在販売中のグッズはありません。</div>`;
-                adminList.innerHTML = `<div class="text-slate-400 text-center py-2">データなし</div>`;
+                grid.innerHTML = `<div class="col-span-full text-slate-400 text-center py-6 text-sm">現在販売中のグッズはありません。</div>`;
+                adminList.innerHTML = `<div class="text-slate-400">データなし</div>`;
                 return;
             }
-
             grid.innerHTML = appData.goods.map(item => `
-                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <div class="h-32 bg-slate-50 flex items-center justify-center text-5xl shrink-0 border-b border-slate-100">${escapeHtml(item.emoji)}</div>
-                    <div class="p-4 flex-grow flex flex-col justify-between space-y-3">
-                        <div>
-                            <h3 class="font-bold text-base text-slate-900">${escapeHtml(item.name)}</h3>
-                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">${escapeHtml(item.desc)}</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-2">
-                            <span class="text-base font-extrabold text-slate-900">${Number(item.price).toLocaleString()} 円</span>
-                            <button onclick="alert('本番モードのため、現在カート機能は停止しています。')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors">購入する</button>
-                        </div>
+                <div class="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col">
+                    <div class="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-2xl">${escapeHtml(item.emoji)}</div>
+                    <div class="flex-grow space-y-1">
+                        <h3 class="font-bold text-slate-900 text-base">${escapeHtml(item.name)}</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">${escapeHtml(item.desc)}</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-50 flex justify-between items-center">
+                        <span class="font-mono font-bold text-indigo-600 text-base">${Number(item.price).toLocaleString()} 円</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded font-medium">販売中</span>
                     </div>
                 </div>
             `).join('');
-
             adminList.innerHTML = appData.goods.map(item => `
-                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border mb-1">
+                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100">
                     <span class="truncate max-w-[180px]">${escapeHtml(item.emoji)} ${escapeHtml(item.name)}</span>
-                    <button onclick="deleteData('goods', '${item.fsId}')" class="text-rose-600 hover:text-rose-800"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="deleteData('goods', '${item.fsId}')" class="text-rose-600 font-bold hover:underline ml-2">削除</button>
                 </div>
             `).join('');
         }
@@ -948,57 +603,47 @@
             const grid = document.getElementById("characters-grid");
             const tableBody = document.getElementById("characters-table-body");
             const adminList = document.getElementById("admin-chars-list");
-
             if (appData.characters.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-6 text-slate-400">登録されたキャラクターはいません。</div>`;
+                grid.innerHTML = `<div class="col-span-full text-slate-400 text-center py-6 text-sm">登録されたキャラクターはいません。</div>`;
                 tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">データがありません</td></tr>`;
-                adminList.innerHTML = `<div class="text-slate-400 text-center py-4 col-span-full">データなし</div>`;
+                adminList.innerHTML = `<div class="text-slate-400 text-sm">データなし</div>`;
                 return;
             }
-
-            // カードグリッド表示
             grid.innerHTML = appData.characters.map(char => `
-                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+                <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3 relative overflow-hidden group">
                     <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-indigo-50 border border-indigo-100 rounded-full flex items-center justify-center text-2xl shrink-0">${escapeHtml(char.emoji)}</div>
+                        <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl">${escapeHtml(char.emoji)}</div>
                         <div>
-                            <h3 class="font-bold text-base text-slate-900">${escapeHtml(char.name)}</h3>
-                            <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-600 border border-slate-200 rounded text-[10px] font-semibold mt-0.5">${escapeHtml(char.tag)}</span>
+                            <h3 class="font-bold text-slate-900 text-base">${escapeHtml(char.name)}</h3>
+                            <span class="inline-block text-[10px] font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">${escapeHtml(char.tag)}</span>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-500 leading-relaxed">${escapeHtml(char.desc)}</p>
-                    <div class="space-y-1.5 pt-2 border-t border-slate-50 text-xs text-slate-600">
-                        <div class="flex justify-between"><span>💪 パワー:</span><span class="font-bold text-indigo-600">${'★'.repeat(char.power)}${'☆'.repeat(5-char.power)}</span></div>
-                        <div class="flex justify-between"><span>⚡ スピード:</span><span class="font-bold text-indigo-600">${'★'.repeat(char.speed)}${'☆'.repeat(5-char.speed)}</span></div>
-                        <div class="flex justify-between"><span class="shrink-0">🍳 得意技:</span><span class="text-slate-700 truncate ml-2">${escapeHtml(char.skill)}</span></div>
+                    <p class="text-xs text-slate-500 leading-relaxed pt-1">${escapeHtml(char.desc)}</p>
+                    <div class="bg-slate-50 p-2.5 rounded-xl text-[11px] space-y-1 font-medium text-slate-600">
+                        <div>✨ <span class="text-slate-400">特技:</span> ${escapeHtml(char.skill)}</div>
                     </div>
                 </div>
             `).join('');
 
-            // 能力表（テーブル）表示
             tableBody.innerHTML = appData.characters.map(char => `
-                <tr class="hover:bg-slate-50/50 transition-colors">
-                    <td class="p-4 font-bold text-slate-900 flex items-center gap-2"><span>${escapeHtml(char.emoji)}</span><span>${escapeHtml(char.name)}</span></td>
-                    <td class="p-4"><span class="px-2 py-0.5 bg-slate-100 border text-slate-600 rounded text-xs">${escapeHtml(char.tag)}</span></td>
-                    <td class="p-4 text-xs">${escapeHtml(char.skill)}</td>
-                    <td class="p-4 text-center font-bold text-indigo-600">${escapeHtml(char.power)}</td>
-                    <td class="p-4 text-center font-bold text-indigo-600">${escapeHtml(char.speed)}</td>
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                    <td class="p-4 font-bold flex items-center gap-2 text-slate-900"><span class="text-lg">${escapeHtml(char.emoji)}</span>${escapeHtml(char.name)}</td>
+                    <td class="p-4"><span class="text-[11px] bg-slate-100 px-2 py-0.5 rounded-full font-medium text-slate-500">${escapeHtml(char.tag)}</span></td>
+                    <td class="p-4 text-xs text-slate-500">${escapeHtml(char.skill)}</td>
+                    <td class="p-4 text-center font-bold font-mono text-indigo-600">${'★'.repeat(char.power)}${'☆'.repeat(5-char.power)}</td>
+                    <td class="p-4 text-center font-bold font-mono text-indigo-600">${'★'.repeat(char.speed)}${'☆'.repeat(5-char.speed)}</td>
                 </tr>
             `).join('');
 
-            // 管理画面用リスト表示（編集・削除機能付き）
             adminList.innerHTML = appData.characters.map(char => `
-                <div class="bg-slate-50 border p-3 rounded-xl flex items-center justify-between gap-2 shadow-sm">
+                <div class="bg-slate-50 border p-3 rounded-xl flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2 truncate">
                         <span class="text-xl shrink-0">${escapeHtml(char.emoji)}</span>
-                        <div class="truncate text-xs">
-                            <p class="font-bold text-slate-800 truncate">${escapeHtml(char.name)}</p>
-                            <p class="text-[10px] text-slate-400 truncate">${escapeHtml(char.tag)}</p>
-                        </div>
+                        <div class="truncate text-xs"><p class="font-bold text-slate-800 truncate">${escapeHtml(char.name)}</p><p class="text-[10px] text-slate-400 truncate">${escapeHtml(char.tag)}</p></div>
                     </div>
-                    <div class="flex gap-2 shrink-0">
-                        <button onclick="editCharacterForm('${char.fsId}')" class="text-indigo-600 hover:text-indigo-800 text-xs px-2 py-1 bg-white border rounded shadow-sm font-semibold">編集</button>
-                        <button onclick="deleteData('characters', '${char.fsId}')" class="text-rose-600 hover:text-rose-800 text-xs px-2 py-1 bg-white border rounded shadow-sm"><i class="fa-solid fa-trash"></i></button>
+                    <div class="flex gap-2 shrink-0 text-xs">
+                        <button onclick="editCharacterForm('${char.fsId}')" class="px-2 py-1 bg-white border border-slate-200 rounded font-semibold text-indigo-600 hover:bg-indigo-50">編集</button>
+                        <button onclick="deleteData('characters', '${char.fsId}')" class="px-2 py-1 bg-white border border-rose-200 rounded font-semibold text-rose-600 hover:bg-rose-50">削除</button>
                     </div>
                 </div>
             `).join('');
@@ -1008,32 +653,22 @@
             const navContainer = document.getElementById("dynamic-nav-links");
             const mobileContainer = document.getElementById("dynamic-mobile-links");
             const adminList = document.getElementById("admin-pages-list");
-
             if (appData.pages.length === 0) {
-                navContainer.innerHTML = "";
-                mobileContainer.innerHTML = "";
-                adminList.innerHTML = `<div class="text-slate-400 text-center py-6">公開中のカスタムページはありません。</div>`;
+                if(navContainer) navContainer.innerHTML = "";
+                if(mobileContainer) mobileContainer.innerHTML = "";
+                adminList.innerHTML = `<div class="text-slate-400 text-sm">公開中のカスタムページはありません。</div>`;
                 return;
             }
+            const navHtml = appData.pages.map(page => `<button onclick="switchPage('${page.fsId}', true)" class="hover:text-indigo-600 transition-colors">${escapeHtml(page.title)}</button>`).join('');
+            if(navContainer) navContainer.innerHTML = navHtml;
+            
+            const mobileHtml = appData.pages.map(page => `<button onclick="switchPage('${page.fsId}', true)" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-file-lines"></i><span>${escapeHtml(page.title)}</span></button>`).join('');
+            if(mobileContainer) mobileContainer.innerHTML = mobileHtml;
 
-            // ヘッダーナビ（PC版）
-            navContainer.innerHTML = appData.pages.map(page => `
-                <button onclick="switchPage('${page.fsId}', true)" class="hover:text-indigo-600 transition-colors">${escapeHtml(page.title)}</button>
-            `).join('');
-
-            // ヘッダーナビ（スマホ版）
-            mobileContainer.innerHTML = appData.pages.map(page => `
-                <button onclick="switchPage('${page.fsId}', true)" class="flex flex-col items-center gap-1 px-3 py-1 hover:text-indigo-600"><i class="fa-solid fa-file-invoice"></i><span>${escapeHtml(page.title)}</span></button>
-            `).join('');
-
-            // 管理画面リスト
             adminList.innerHTML = appData.pages.map(page => `
-                <div class="bg-slate-50 border p-4 rounded-xl flex items-start justify-between gap-4 shadow-sm">
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-sm text-slate-800">${escapeHtml(page.title)}</h4>
-                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">${escapeHtml(page.content)}</p>
-                    </div>
-                    <button onclick="deleteData('pages', '${page.fsId}')" class="text-rose-600 hover:text-rose-800 px-2 py-1 bg-white border rounded shrink-0 shadow-sm text-xs"><i class="fa-solid fa-trash mr-1"></i>削除</button>
+                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="font-bold text-sm text-slate-700">${escapeHtml(page.title)}</span>
+                    <button onclick="deleteData('pages', '${page.fsId}')" class="text-xs text-rose-600 font-bold hover:underline">削除する</button>
                 </div>
             `).join('');
         }
@@ -1044,55 +679,47 @@
                 tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">ログがありません。</td></tr>`;
                 return;
             }
-
             tbody.innerHTML = appData.logs.map(log => `
-                <tr class="hover:bg-slate-50/50 transition-colors">
-                    <td class="p-3 font-mono">${escapeHtml(log.time)}</td>
-                    <td class="p-3 font-semibold text-indigo-600">${escapeHtml(log.page)}</td>
-                    <td class="p-3 text-slate-400 font-mono text-[10px] break-all max-w-xs">${escapeHtml(log.userAgent)}</td>
+                <tr class="hover:bg-slate-50/60">
+                    <td class="p-3 font-mono text-slate-400 whitespace-nowrap">${escapeHtml(log.time)}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-medium">${escapeHtml(log.page)}</span></td>
+                    <td class="p-3 text-slate-400 truncate max-w-[250px]" title="${escapeHtml(log.userAgent)}">${escapeHtml(log.userAgent)}</td>
                 </tr>
             `).join('');
         }
-
-
-        // ==================== 管理者用：データ書き込み・削除アクション ====================
 
         // ① お知らせ投稿
         document.getElementById("btn-add-news").addEventListener("click", async () => {
             const date = document.getElementById("admin-news-date").value;
             const tag = document.getElementById("admin-news-tag").value || "NEWS";
             const content = document.getElementById("admin-news-content").value;
-
             if (!date || !content) return showToast("日付と本文を入力してください", "error");
-
             try {
                 await addDoc(collection(db, "news"), { date, tag, content, timestamp: serverTimestamp() });
                 showToast("📢 お知らせを投稿しました");
                 document.getElementById("admin-news-content").value = "";
-                loadAllData();
+                await loadAllData();
             } catch (e) { handleFirestoreError(e); }
         });
 
-        // ② グッズ新規登録
+        // ② グッズ登録
         document.getElementById("btn-add-goods").addEventListener("click", async () => {
             const name = document.getElementById("admin-goods-name").value;
             const price = document.getElementById("admin-goods-price").value;
             const emoji = document.getElementById("admin-goods-emoji").value;
             const desc = document.getElementById("admin-goods-desc").value;
-
             if (!name || !price || !desc) return showToast("未入力の項目があります", "error");
-
             try {
                 await addDoc(collection(db, "goods"), { name, price: Number(price), emoji, desc, timestamp: serverTimestamp() });
                 showToast("🛍 グッズを新規登録しました");
                 document.getElementById("admin-goods-name").value = "";
                 document.getElementById("admin-goods-price").value = "";
                 document.getElementById("admin-goods-desc").value = "";
-                loadAllData();
+                await loadAllData();
             } catch (e) { handleFirestoreError(e); }
         });
 
-        // ③ キャラクター追加 / 編集保存
+        // ③ キャラクター追加/編集
         document.getElementById("btn-save-char").addEventListener("click", async () => {
             const id = document.getElementById("admin-char-id").value;
             const name = document.getElementById("admin-char-name").value;
@@ -1106,32 +733,28 @@
             if (!name || !skill || !desc) return showToast("必須項目（名前・得意なこと・紹介文）を入力してください", "error");
 
             const charData = {
-                name, emoji, tag, 
-                power: Math.min(5, Math.max(1, Number(power))), 
-                speed: Math.min(5, Math.max(1, Number(speed))), 
+                name, emoji, tag,
+                power: Math.min(5, Math.max(1, Number(power))),
+                speed: Math.min(5, Math.max(1, Number(speed))),
                 skill, desc, timestamp: serverTimestamp()
             };
 
             try {
                 if (id) {
-                    // 編集更新
                     await setDoc(doc(db, "characters", id), charData, { merge: true });
                     showToast("🌟 キャラクター情報を更新しました");
                 } else {
-                    // 新規追加
                     await addDoc(collection(db, "characters"), charData);
                     showToast("🌟 新しいキャラクターを追加しました");
                 }
                 clearCharacterForm();
-                loadAllData();
+                await loadAllData();
             } catch (e) { handleFirestoreError(e); }
         });
 
-        // キャラクター編集フォームへのデータ呼び出し
         window.editCharacterForm = function(id) {
             const char = appData.characters.find(c => c.fsId === id);
             if (!char) return;
-
             document.getElementById("admin-char-id").value = char.fsId;
             document.getElementById("admin-char-name").value = char.name;
             document.getElementById("admin-char-emoji").value = char.emoji;
@@ -1140,9 +763,8 @@
             document.getElementById("admin-char-speed").value = char.speed;
             document.getElementById("admin-char-skill").value = char.skill;
             document.getElementById("admin-char-desc").value = char.desc;
-
             document.getElementById("btn-save-char").innerText = "更新（上書き）する";
-            showToast("フォームにデータを読み込みました。修正して保存してください。", "info");
+            showToast("フォームにデータを読み込みました。", "info");
         };
 
         function clearCharacterForm() {
@@ -1157,436 +779,46 @@
             document.getElementById("btn-save-char").innerText = "保存する";
         }
         document.getElementById("btn-clear-char-form").addEventListener("click", clearCharacterForm);
-        <input id="admin-char-name" ...>
-<textarea id="admin-char-desc" ...></textarea>
-<button id="btn-add-character">保存する</button>
 
-<script type="module">
-    // ==================== Firebase 読み込みと初期化 ====================
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-app.js";
-    import { getFirestore, collection, addDoc, doc, setDoc, getDocs, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore.js";
-    import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-auth.js";
+        // ④ カスタムページ作成
+        document.getElementById("btn-add-page").addEventListener("click", async () => {
+            const title = document.getElementById("admin-page-title").value;
+            const content = document.getElementById("admin-page-content").value;
+            if (!title || !content) return showToast("タイトルと本文を入力してください", "error");
+            try {
+                await addDoc(collection(db, "pages"), { title, content, timestamp: serverTimestamp() });
+                showToast("📄 新しいカスタムページを公開しました");
+                document.getElementById("admin-page-title").value = "";
+                document.getElementById("admin-page-content").value = "";
+                await loadAllData();
+            } catch (e) { handleFirestoreError(e); }
+        });
 
-    // ⚠️ ご自身のFirebase設定（プロジェクトのキーなど）に書き換えてください
-    const firebaseConfig = {
-        apiKey: "...",
-        authDomain: "...",
-        projectId: "...",
-        storageBucket: "...",
-        messagingSenderId: "...",
-        appId: "..."
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // ==================== お問い合わせ送信処理 ====================
-    window.handleContactSubmit = async function(event) {
-        event.preventDefault();
-        const name = document.getElementById("contact-name").value;
-        const email = document.getElementById("contact-email").value;
-        const message = document.getElementById("contact-message").value;
-        try {
-            await addDoc(collection(db, "contacts"), { name, email, message, timestamp: serverTimestamp() });
-            showToast("📬 お問い合わせを送信しました！", "success");
-            document.getElementById("contact-form").reset();
-        } catch (e) {
-            console.error("お問い合わせ送信エラー:", e);
-            showToast("送信に失敗しました。設定を確認してください。", "error");
-        }
-    };
-
-    // トースト通知の表示関数
-    function showToast(message, type = "success") {
-        const container = document.getElementById("toast-container");
-        if (!container) return;
-        const toast = document.createElement("div");
-        toast.className = `px-4 py-3 rounded-xl shadow-lg font-bold text-sm text-white fade-in flex items-center gap-2 transition-all duration-300 transform translate-y-0`;
-        if (type === "success") {
-            toast.classList.add("bg-emerald-600");
-        } else if (type === "error") {
-            toast.classList.add("bg-rose-600");
-        } else {
-            toast.classList.add("bg-indigo-600");
-        }
-        toast.innerHTML = `${message}`;
-        container.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = "0";
-            toast.style.transform = "translateY(10px)";
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-
-    // ==================== Firebase Authentication (ログイン・管理) ====================
-    document.getElementById("nav-login-btn").addEventListener("click", () => {
-        document.getElementById("login-modal").classList.remove("hidden");
-    });
-    document.getElementById("btn-close-login").addEventListener("click", () => {
-        document.getElementById("login-modal").classList.add("hidden");
-    });
-
-    document.getElementById("btn-submit-login").addEventListener("click", async () => {
-        const email = document.getElementById("login-email").value;
-        const password = document.getElementById("login-password").value;
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            showToast("🔒 管理者としてログインしました");
-            document.getElementById("login-modal").classList.add("hidden");
-            document.getElementById("login-email").value = "";
-            document.getElementById("login-password").value = "";
-        } catch (error) {
-            console.error("ログインエラー:", error);
-            showToast("ログインに失敗しました。認証情報を確認してください。", "error");
-        }
-    });
-
-    document.getElementById("nav-logout-btn").addEventListener("click", async () => {
-        try {
-            await signOut(auth);
-            showToast("👋 ログアウトしました");
-            switchPage('home');
-        } catch (error) {
-            console.error("ログアウトエラー:", error);
-        }
-    });
-
-    document.getElementById("nav-admin-btn").addEventListener("click", () => {
-        document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-        document.getElementById('admin-view').classList.remove('hidden');
-        document.getElementById('hero-section').classList.add('hidden');
-        document.getElementById("nav-admin-btn").classList.add("hidden");
-        document.getElementById("nav-view-btn").classList.remove("hidden");
-        document.getElementById("user-nav-links").classList.add("hidden");
-        document.getElementById("mobile-nav-links").classList.add("hidden");
-    });
-
-    document.getElementById("nav-view-btn").addEventListener("click", () => {
-        switchPage('home');
-    });
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById("nav-login-btn").classList.add("hidden");
-            document.getElementById("nav-logout-btn").classList.remove("hidden");
-            document.getElementById("nav-admin-btn").classList.remove("hidden");
-        } else {
-            document.getElementById("nav-login-btn").classList.remove("hidden");
-            document.getElementById("nav-logout-btn").classList.add("hidden");
-            document.getElementById("nav-admin-btn").classList.add("hidden");
-            document.getElementById("nav-view-btn").classList.add("hidden");
-        }
-    });
-
-    // ==================== Firestore データ同期・描画処理 ====================
-    function handleFirestoreError(error) {
-        console.error("Firestoreエラー:", error);
-        if (error.code === 'permission-denied' || error.message.includes('Firestore API')) {
-            document.getElementById("error-setup-modal").classList.remove("hidden");
-        }
-    }
-
-    async function loadAllData() {
-        try {
-            // 1. お知らせ (news) の取得
-            const newsSnap = await getDocs(collection(db, "news"));
-            appData.news = [];
-            newsSnap.forEach(docSnap => { appData.news.push({ fsId: docSnap.id, ...docSnap.data() }); });
-            renderNews();
-
-            // 2. グッズ (goods) の取得
-            const goodsSnap = await getDocs(collection(db, "goods"));
-            appData.goods = [];
-            goodsSnap.forEach(docSnap => { appData.goods.push({ fsId: docSnap.id, ...docSnap.data() }); });
-            renderGoods();
-
-            // 3. キャラクター (characters) の取得
-            const charsSnap = await getDocs(collection(db, "characters"));
-            appData.characters = [];
-            charsSnap.forEach(docSnap => { appData.characters.push({ fsId: docSnap.id, ...docSnap.data() }); });
-            renderCharacters();
-
-            // 4. カスタムページ (pages) の取得
-            const pagesSnap = await getDocs(collection(db, "pages"));
-            appData.pages = [];
-            pagesSnap.forEach(docSnap => { appData.pages.push({ fsId: docSnap.id, ...docSnap.data() }); });
-            renderCustomPages();
-
-            // 5. アクセスログ (access_logs) の取得
-            const logsSnap = await getDocs(collection(db, "access_logs"));
-            appData.logs = [];
-            logsSnap.forEach(docSnap => { appData.logs.push({ fsId: docSnap.id, ...docSnap.data() }); });
-            appData.logs.sort((a, b) => new Date(b.time) - new Date(a.time));
-            renderLogs();
-        } catch (error) {
-            handleFirestoreError(error);
-        }
-    }
-
-    // --- 各種 画面レンダリング関数 ---
-    function renderNews() {
-        const container = document.getElementById("news-list-container");
-        const adminList = document.getElementById("admin-news-list");
-        if (appData.news.length === 0) {
-            container.innerHTML = `現在お知らせはありません。`;
-            adminList.innerHTML = `データなし`;
-            return;
-        }
-        container.innerHTML = appData.news.map(item => `${escapeHtml(item.date)} ${escapeHtml(item.tag)} ${escapeHtml(item.content)}`).join('');
-        adminList.innerHTML = appData.news.map(item => `${escapeHtml(item.date)} - ${escapeHtml(item.content)}`).join('');
-    }
-
-    // 数値型のズレを防止したグッズ一覧の描画
-    function renderGoods() {
-        const grid = document.getElementById("goods-grid");
-        const adminList = document.getElementById("admin-goods-list");
-        if (appData.goods.length === 0) {
-            grid.innerHTML = `現在販売中のグッズはありません。`;
-            adminList.innerHTML = `データなし`;
-            return;
-        }
-        grid.innerHTML = appData.goods.map(item => `${escapeHtml(item.emoji)}${escapeHtml(item.name)} ${escapeHtml(item.desc)} ${Number(item.price).toLocaleString()} 円`).join('');
-        adminList.innerHTML = appData.goods.map(item => `${escapeHtml(item.emoji)} ${escapeHtml(item.name)}`).join('');
-    }
-
-    function renderCharacters() {
-        const grid = document.getElementById("characters-grid");
-        const tableBody = document.getElementById("characters-table-body");
-        const adminList = document.getElementById("admin-chars-list");
-        if (appData.characters.length === 0) {
-            grid.innerHTML = `登録されたキャラクターはいません。`;
-            tableBody.innerHTML = `データがありません`;
-            adminList.innerHTML = `データなし`;
-            return;
-        }
-        grid.innerHTML = appData.characters.map(char => `${escapeHtml(char.emoji)} ${escapeHtml(char.name)} ${escapeHtml(char.tag)} ${escapeHtml(char.desc)}`).join('');
-        tableBody.innerHTML = appData.characters.map(char => `${escapeHtml(char.emoji)}${escapeHtml(char.name)}`).join('');
-        adminList.innerHTML = appData.characters.map(char => `${escapeHtml(char.emoji)} ${escapeHtml(char.name)} ${escapeHtml(char.tag)}`).join('');
-    }
-
-    function renderCustomPages() {
-        const navContainer = document.getElementById("dynamic-nav-links");
-        const mobileContainer = document.getElementById("dynamic-mobile-links");
-        const adminList = document.getElementById("admin-pages-list");
-        if (appData.pages.length === 0) {
-            if(navContainer) navContainer.innerHTML = "";
-            if(mobileContainer) mobileContainer.innerHTML = "";
-            adminList.innerHTML = `公開中のカスタムページはありません。`;
-            return;
-        }
-        if(navContainer) navContainer.innerHTML = appData.pages.map(page => `${escapeHtml(page.title)}`).join('');
-        if(mobileContainer) mobileContainer.innerHTML = appData.pages.map(page => `${escapeHtml(page.title)}`).join('');
-        adminList.innerHTML = appData.pages.map(page => `${escapeHtml(page.title)}`).join('');
-    }
-
-    function renderLogs() {
-        const tbody = document.getElementById("admin-logs-tbody");
-        if (appData.logs.length === 0) {
-            tbody.innerHTML = `ログがありません。`;
-            return;
-        }
-        tbody.innerHTML = appData.logs.map(log => `${escapeHtml(log.time)} ${escapeHtml(log.page)}`).join('');
-    }
-
-    // ==================== 管理者用：データ書き込み・削除アクション ====================
-    // ① お知らせ投稿処理（強制リフレッシュ対応）
-    document.getElementById("btn-add-news").addEventListener("click", async () => {
-        const date = document.getElementById("admin-news-date").value;
-        const tag = document.getElementById("admin-news-tag").value || "NEWS";
-        const content = document.getElementById("admin-news-content").value;
-        if (!date || !content) return showToast("日付と本文を入力してください", "error");
-        try {
-            await addDoc(collection(db, "news"), { date, tag, content, timestamp: serverTimestamp() });
-            showToast("📢 お知らせを投稿しました");
-            document.getElementById("admin-news-content").value = "";
-            await loadAllData();
-        } catch (e) { handleFirestoreError(e); }
-    });
-
-    // ② グッズ新規登録処理（Number数値変換＆強制リフレッシュ対応）
-    document.getElementById("btn-add-goods").addEventListener("click", async () => {
-        const name = document.getElementById("admin-goods-name").value;
-        const price = document.getElementById("admin-goods-price").value;
-        const emoji = document.getElementById("admin-goods-emoji").value;
-        const desc = document.getElementById("admin-goods-desc").value;
-        if (!name || !price || !desc) return showToast("未入力の項目があります", "error");
-        try {
-            await addDoc(collection(db, "goods"), { name, price: Number(price), emoji, desc, timestamp: serverTimestamp() });
-            showToast("🛍 グッズを新規登録しました");
-            document.getElementById("admin-goods-name").value = "";
-            document.getElementById("admin-goods-price").value = "";
-            document.getElementById("admin-goods-desc").value = "";
-            await loadAllData();
-        } catch (e) { handleFirestoreError(e); }
-    });
-
-    // ③ キャラクター追加 / 編集保存（ID競合と不要文字を完全に解消した統一コード）
-    document.getElementById("btn-save-char").addEventListener("click", async () => {
-        const id = document.getElementById("admin-char-id").value;
-        const name = document.getElementById("admin-char-name").value;
-        const emoji = document.getElementById("admin-char-emoji").value || "👤";
-        const tag = document.getElementById("admin-char-tag").value || "一般";
-        const power = document.getElementById("admin-char-power").value || 3;
-        const speed = document.getElementById("admin-char-speed").value || 3;
-        const skill = document.getElementById("admin-char-skill").value;
-        const desc = document.getElementById("admin-char-desc").value;
-
-        if (!name || !skill || !desc) return showToast("必須項目（名前・得意なこと・紹介文）を入力してください", "error");
-
-        const charData = {
-            name, emoji, tag,
-            power: Math.min(5, Math.max(1, Number(power))),
-            speed: Math.min(5, Math.max(1, Number(speed))),
-            skill, desc, timestamp: serverTimestamp()
+        // ⑤ 共通削除処理
+        window.deleteData = async function(colName, fsId) {
+            if (!confirm("本当にこのデータを削除してもよろしいですか？")) return;
+            try {
+                await deleteDoc(doc(db, colName, fsId));
+                showToast("🗑 データを削除しました");
+                await loadAllData();
+            } catch (e) { handleFirestoreError(e); }
         };
 
-        try {
-            if (id) {
-                await setDoc(doc(db, "characters", id), charData, { merge: true });
-                showToast("🌟 キャラクター情報を更新しました");
-            } else {
-                await addDoc(collection(db, "characters"), charData);
-                showToast("🌟 新しいキャラクターを追加しました");
-            }
-            clearCharacterForm();
-            await loadAllData();
-        } catch (e) { handleFirestoreError(e); }
-    });
-
-    window.editCharacterForm = function(id) {
-        const char = appData.characters.find(c => c.fsId === id);
-        if (!char) return;
-        document.getElementById("admin-char-id").value = char.fsId;
-        document.getElementById("admin-char-name").value = char.name;
-        document.getElementById("admin-char-emoji").value = char.emoji;
-        document.getElementById("admin-char-tag").value = char.tag;
-        document.getElementById("admin-char-power").value = char.power;
-        document.getElementById("admin-char-speed").value = char.speed;
-        document.getElementById("admin-char-skill").value = char.skill;
-        document.getElementById("admin-char-desc").value = char.desc;
-        document.getElementById("btn-save-char").innerText = "更新（上書き）する";
-        showToast("フォームにデータを読み込みました。", "info");
-    };
-
-    function clearCharacterForm() {
-        document.getElementById("admin-char-id").value = "";
-        document.getElementById("admin-char-name").value = "";
-        document.getElementById("admin-char-emoji").value = "";
-        document.getElementById("admin-char-tag").value = "";
-        document.getElementById("admin-char-power").value = "";
-        document.getElementById("admin-char-speed").value = "";
-        document.getElementById("admin-char-skill").value = "";
-        document.getElementById("admin-char-desc").value = "";
-        document.getElementById("btn-save-char").innerText = "保存する";
-    }
-    document.getElementById("btn-clear-char-form").addEventListener("click", clearCharacterForm);
-
-    // ④ 新しいカスタムページの作成
-    document.getElementById("btn-add-page").addEventListener("click", async () => {
-        const title = document.getElementById("admin-page-title").value;
-        const content = document.getElementById("admin-page-content").value;
-        if (!title || !content) return showToast("タイトルと本文を入力してください", "error");
-        try {
-            await addDoc(collection(db, "pages"), { title, content, timestamp: serverTimestamp() });
-            showToast("📄 新しいカスタムページを公開しました");
-            document.getElementById("admin-page-title").value = "";
-            document.getElementById("admin-page-content").value = "";
-            await loadAllData();
-        } catch (e) { handleFirestoreError(e); }
-    });
-
-    // ⑤ 共通削除処理
-    window.deleteData = async function(colName, fsId) {
-        if (!confirm("本当にこのデータを削除してもよろしいですか？")) return;
-        try {
-            await deleteDoc(doc(db, colName, fsId));
-            showToast("🗑 データを削除しました");
-            await loadAllData();
-        } catch (e) { handleFirestoreError(e); }
-    };
-
-    // ⑥ 閲覧者ログをすべて削除
-    document.getElementById("btn-clear-logs").addEventListener("click", async () => {
-        if (!confirm("すべてのアクセスログを完全に削除します。よろしいですか？")) return;
-        try {
-            const promises = appData.logs.map(log => deleteDoc(doc(db, "access_logs", log.fsId)));
-            await Promise.all(promises);
-            showToast("👀 ログ履歴をすべてクリアしました");
-            await loadAllData();
-        } catch (e) { handleFirestoreError(e); }
-    });
-
-    // ==================== 初期実行 ====================
-    loadAllData();
-    if (typeof recordAccessLog === "function") recordAccessLog("home");
-
-</script>
-</body>
-// 【修正版】① お知らせ投稿処理
-        document.getElementById("btn-add-news").addEventListener("click", async () => {
-            const date = document.getElementById("admin-news-date").value;
-            const tag = document.getElementById("admin-news-tag").value || "NEWS";
-            const content = document.getElementById("admin-news-content").value;
-
-            if (!date || !content) {
-                showToast("日付と本文を入力してください", "error");
-                return;
-            }
-
+        // ⑥ ログ削除
+        document.getElementById("btn-clear-logs").addEventListener("click", async () => {
+            if (!confirm("すべてのアクセスログを完全に削除します。よろしいですか？")) return;
             try {
-                // Firestoreへ追加
-                await addDoc(collection(db, "news"), { 
-                    date: date, 
-                    tag: tag, 
-                    content: content, 
-                    timestamp: serverTimestamp() 
-                });
-                
-                showToast("📢 お知らせを投稿しました");
-                
-                // フォームをクリア
-                document.getElementById("admin-news-content").value = "";
-                
-                // ★データを再取得して画面を強制リフレッシュ
-                await loadAllData(); 
-                
-            } catch (e) { 
-                handleFirestoreError(e); 
-            }
-        });
-        // 【修正版】② グッズ新規登録処理
-        document.getElementById("btn-add-goods").addEventListener("click", async () => {
-            const name = document.getElementById("admin-goods-name").value;
-            const price = document.getElementById("admin-goods-price").value;
-            const emoji = document.getElementById("admin-goods-emoji").value;
-            const desc = document.getElementById("admin-goods-desc").value;
-
-            if (!name || !price || !desc) {
-                showToast("未入力の項目があります", "error");
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, "goods"), { 
-                    name: name, 
-                    price: Number(price), // 確実に数値に変換
-                    emoji: emoji, 
-                    desc: desc, 
-                    timestamp: serverTimestamp() 
-                });
-                
-                showToast("🛍 グッズを新規登録しました");
-                
-                // 入力欄のリセット
-                document.getElementById("admin-goods-name").value = "";
-                document.getElementById("admin-goods-price").value = "";
-                document.getElementById("admin-goods-desc").value = "";
-                
-                // ★データを再取得して画面を強制リフレッシュ
+                const promises = appData.logs.map(log => deleteDoc(doc(db, "access_logs", log.fsId)));
+                await Promise.all(promises);
+                showToast("👀 ログ履歴をすべてクリアしました");
                 await loadAllData();
-                
-            } catch (e) { 
-                handleFirestoreError(e); 
-            }
+            } catch (e) { handleFirestoreError(e); }
         });
-</script>
+
+        // 初期実行
+        loadAllData();
+        recordAccessLog("home");
+
+    </script>
+</body>
+</html>
